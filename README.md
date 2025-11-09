@@ -8,6 +8,10 @@
 
 > 🎨 UnoCSS preset for uni-app-x - 为 uni-app-x 提供原子化 CSS 支持
 
+## 🔗 仓库地址
+
+GitHub: https://github.com/tggdddd/unocss-uniapp-x.git
+
 ## ✨ 特性
 
 - 🚀 **专为 uni-app-x 设计** - 完美支持 `.uvue` 文件格式
@@ -203,7 +207,7 @@ export default {
 
 ## 🤝 贡献
 
-欢迎提交 Issue 和 Pull Request！
+欢迎提交 Issue 和 Pull Request！（欢迎 PR）
 
 ## 📄 许可证
 
@@ -239,4 +243,4 @@ JACK
 
 ---
 
-如有问题或建议，欢迎提交 [Issue](https://github.com/yourusername/unocss-uniapp-x/issues)！
+如有问题或建议，欢迎提交 [Issue](https://github.com/tggdddd/unocss-uniapp-x/issues)！
