@@ -8,7 +8,7 @@ export default (env, argv) => {
   
   const baseConfig = {
     devtool: isDevelopment ? 'inline-source-map' : 'source-map',
-    entry: './index.ts',
+    entry: './src/index.ts',
     module: {
       rules: [
         {

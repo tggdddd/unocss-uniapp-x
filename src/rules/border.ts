@@ -57,8 +57,8 @@ export const borderWidth: Rule[] = [
     /^border(?:-(t|b|l|r|y|x))?-(\d+(?:\.\d+)?)$/,
     ([, d, n], { theme }) => {
       if (d) {
-        let border = borderWidthMap[d];
-        let css: Record<string, string> = {};
+        const border = borderWidthMap[d];
+        const css: Record<string, string> = {};
         border.forEach((item) => {
           css['border-' + item + '-width'] =
             `${addUnit(toSpacing(n, theme), theme)}`;
@@ -73,8 +73,8 @@ export const borderWidth: Rule[] = [
     /^border(?:-(t|b|l|r))?-\[(\d+.+)\]$/,
     ([, d, n]) => {
       if (d) {
-        let border = borderWidthMap[d];
-        let css: Record<string, string> = {};
+        const border = borderWidthMap[d];
+        const css: Record<string, string> = {};
         border.forEach((item) => {
           css['border-' + item + '-width'] = n;
         });
@@ -97,8 +97,8 @@ const createBorderColorRules = (): Rule[] => {
       /^border(?:-(t|b|l|r|y|x))?-\[(#.+)]$/,
       ([, d, n]) => {
         if (d) {
-          let border = borderWidthMap[d];
-          let css: Record<string, string> = {};
+          const border = borderWidthMap[d];
+          const css: Record<string, string> = {};
           border.forEach((item) => {
             css['border-' + item + '-color'] = n;
           });
@@ -112,8 +112,8 @@ const createBorderColorRules = (): Rule[] => {
       /^border(?:-(t|b|l|r|y|x))?-\[(rgb\(.+\))\]$/,
       ([, d, n]) => {
         if (d) {
-          let border = borderWidthMap[d];
-          let css: Record<string, string> = {};
+          const border = borderWidthMap[d];
+          const css: Record<string, string> = {};
           border.forEach((item) => {
             css['border-' + item + '-color'] = n;
           });
@@ -134,7 +134,7 @@ const createBorderColorRules = (): Rule[] => {
 
   Object.entries(colors!).forEach(([key, value]) => {
     if (typeof value !== 'string' && value !== undefined) {
-      let level = Object.keys(value);
+      const level = Object.keys(value);
       rules.push([
         new RegExp(`^border(?:-(t|b|l|r|y|x))?-${key}(?:@(\\d+))?$`),
         ([, o]) => {

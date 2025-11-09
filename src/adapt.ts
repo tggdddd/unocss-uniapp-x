@@ -42,7 +42,7 @@ export function adaptUnoCSS() {
     const rootNodeModules = findRootNodeModules();
 
     if (!rootNodeModules) {
-      console.warn('[unocss-uni-app-x] 未找到 node_modules 目录，跳过适配');
+      // console.warn('[unocss-uni-app-x] 未找到 node_modules 目录，跳过适配');
       return false;
     }
 
@@ -54,9 +54,9 @@ export function adaptUnoCSS() {
 
     // 检测文件是否存在
     if (!fs.existsSync(unocssVitePath)) {
-      console.warn(
-        '[unocss-uni-app-x] @unocss/vite/dist/index.mjs 文件不存在，跳过适配'
-      );
+      // console.warn(
+      //   '[unocss-uni-app-x] @unocss/vite/dist/index.mjs 文件不存在，跳过适配'
+      // );
       return false;
     }
 
@@ -65,9 +65,9 @@ export function adaptUnoCSS() {
 
     // 判断是否已经包含 uvue 字符串
     if (content.includes('uvue')) {
-      console.log(
-        '[unocss-uni-app-x] @unocss/vite 已支持 .uvue 文件，无需修改'
-      );
+      // console.log(
+      //   '[unocss-uni-app-x] @unocss/vite 已支持 .uvue 文件，无需修改'
+      // );
       return true;
     }
 
@@ -78,7 +78,7 @@ export function adaptUnoCSS() {
     // 写回文件
     fs.writeFileSync(unocssVitePath, content, 'utf-8');
 
-    console.log('[unocss-uni-app-x] 成功适配 @unocss/vite 以支持 .uvue 文件');
+    // console.log('[unocss-uni-app-x] 成功适配 @unocss/vite 以支持 .uvue 文件');
     return true;
   } catch (error) {
     console.error('[unocss-uni-app-x] 适配 UnoCSS 时出错:', error);

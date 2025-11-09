@@ -27,7 +27,7 @@ export const backgroundColor: Rule[] = [
 ];
 Object.entries(colors!).forEach(([key, value]) => {
   if (typeof value !== 'string' && value !== undefined) {
-    let level = Object.keys(value);
+    const level = Object.keys(value);
     backgroundColor.push([
       new RegExp(`^bg-${key}(?:@(\\d+))?$`),
       ([, o]) => {

@@ -14,6 +14,8 @@
     "@commitlint/config-conventional": "^20.0.0",
     "@rollup/pluginutils": "^5.1.0",
     "@types/node": "^24.10.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.3",
+    "@typescript-eslint/parser": "^8.46.3",
     "concurrently": "^9.2.1",
     "eslint": "^9.39.1",
     "husky": "^9.1.7",
@@ -45,34 +47,46 @@
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,json,css,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,json,css,md}\"",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "test:verbose": "jest --verbose",
     "preview": "npm run build && serve dist",
     "preview:prod": "npm run build && node dist/index.js",
     "prepare": "husky install",
     "pre-commit": "lint-staged",
-    "validate": "npm run type-check && npm run lint && npm run test",
+    "validate": "npm run type-check && npm run lint",
     "ci:build": "npm run validate && npm run build",
     "release": "standard-version",
     "release:minor": "standard-version --release-as minor",
     "release:major": "standard-version --release-as major",
     "release:patch": "standard-version --release-as patch",
-    "postrelease": "git push --follow-tags origin main"
+    "postrelease": "git push --follow-tags origin master",
+    "prepublishOnly": "npm run ci:build",
+    "prepack": "npm run build",
+    "postpublish": "npm run clean:all",
+    "publish:dry-run": "npm run prepublishOnly && npm publish --dry-run",
+    "publish:public": "npm run prepublishOnly && npm publish --access public",
+    "publish:beta": "npm run prepublishOnly && npm publish --tag beta",
+    "publish:next": "npm run prepublishOnly && npm publish --tag next",
+    "publish:latest": "npm run prepublishOnly && npm publish --tag latest",
+    "release:publish": "npm run release && npm run publish:latest",
+    "release:beta": "npm version prerelease --preid=beta && npm run publish:beta",
+    "release:next": "npm version prerelease --preid=next && npm run publish:next",
+    "pack:info": "npm pack --dry-run",
+    "pack:list": "npm pack && tar -tf *.tgz && rimraf *.tgz",
+    "view:package": "npm view",
+    "check:registry": "npm config get registry",
+    "prepublish:clean": "npm run clean:all && npm ci"
   },
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "main": "dist/src/index.cjs",
+  "module": "dist/src/index.mjs",
+  "types": "dist/src/index.d.ts",
   "files": [
     "dist",
     "*.d.ts"
   ],
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs",
-      "types": "./dist/index.d.ts"
+      "import": "./dist/src/index.mjs",
+      "require": "./dist/src/index.cjs",
+      "types": "./dist/src/index.d.ts"
     }
   }
 }

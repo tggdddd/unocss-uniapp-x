@@ -60,9 +60,9 @@ export default function transformerClass(
         const injectStr = Array.from(
           new Set(
             classNames
-              .map((x: any) => x[1])
-              .filter((x: any) => x)
-              .flatMap((x: any) => x.split(' '))
+              .map((x: string[]) => x[1])
+              .filter((x: string) => x)
+              .flatMap((x: string) => x.split(' '))
           )
         ).join(' ');
 

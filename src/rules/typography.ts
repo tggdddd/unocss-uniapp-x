@@ -75,14 +75,14 @@ export const fontStyle: Rule[] = [
 export const fontWeight: Rule[] = [
   [
     new RegExp(`^font-(thin|extralight|light|normal)$`),
-    ([, d]) => {
+    ([,]) => {
       return { 'font-weight': 400 };
     },
     { autocomplete: [`font-normal`] }
   ],
   [
     new RegExp(`^font-(medium|semibold|bold|extrabold|black)$`),
-    ([, d]) => {
+    ([,]) => {
       return { 'font-weight': 700 };
     },
     { autocomplete: [`font-bold`] }
@@ -180,7 +180,7 @@ export const color: Rule[] = [
 ];
 Object.entries(colors!).forEach(([key, value]) => {
   if (typeof value !== 'string' && value !== undefined) {
-    let level = Object.keys(value);
+    const level = Object.keys(value);
     color.push([
       new RegExp(`^text-${key}(?:/(\\d+))?$`),
       ([, o]) => {

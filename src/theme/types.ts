@@ -1,5 +1,3 @@
-import type { Arrayable } from '@unocss/core';
-
 export interface Colors {
   [key: string]: (Colors & { DEFAULT?: string }) | string;
 }

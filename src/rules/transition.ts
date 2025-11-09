@@ -3,7 +3,7 @@ import type { Theme } from '../theme/types';
 import { time } from '../utils';
 function resolveTransitionProperty(prop: string): string | undefined {
   let p: string | undefined;
-  let allProps = [
+  const allProps = [
     'all',
     'none',
     'width',
@@ -46,7 +46,7 @@ export const transitions: Rule<Theme>[] = [
   // transition
   [
     /^transition(?:-(\D+?))?(?:-(\d+))?$/,
-    ([, prop, d], { theme }) => {
+    ([, prop, d]) => {
       if (!prop && !d) {
         return {
           'transition-property': 'all',
@@ -80,19 +80,19 @@ export const transitions: Rule<Theme>[] = [
   // timings
   [
     /^(?:transition-)?duration-(.+)$/,
-    ([, d], { theme }) => ({ 'transition-duration': time(d) }),
+    ([, d]) => ({ 'transition-duration': time(d) }),
     { autocomplete: ['transition-duration-$duration', 'duration-$duration'] }
   ],
 
   [
     /^(?:transition-)?delay-(.+)$/,
-    ([, d], { theme }) => ({ 'transition-delay': time(d) }),
+    ([, d]) => ({ 'transition-delay': time(d) }),
     { autocomplete: ['transition-delay-$duration', 'delay-$duration'] }
   ],
 
   [
     /^(?:transition-)?ease(?:-(.+))?$/,
-    ([, d], { theme }) => ({ 'transition-timing-function': d ?? 'ease' }),
+    ([, d]) => ({ 'transition-timing-function': d ?? 'ease' }),
     {
       autocomplete: [
         'transition-ease-(linear|in|out|in-out|DEFAULT)',
@@ -104,7 +104,7 @@ export const transitions: Rule<Theme>[] = [
   // props
   [
     /^(?:transition-)?property-(.+)$/,
-    ([, v], { theme }) => {
+    ([, v]) => {
       const p = resolveTransitionProperty(v);
       if (p) return { 'transition-property': p };
     },
