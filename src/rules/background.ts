@@ -4,21 +4,21 @@ import { colors } from '../theme/colors';
 
 export const backgroundColor: Rule[] = [
   [
-    new RegExp(`^bg-\[(#.+)]$`),
+    new RegExp(`^bg-\\[(#\\w+)\\]$`),
     ([, n]) => {
       return { 'background-color': n };
     },
     { autocomplete: [`bg-[#<hex>]`] }
   ],
   [
-    new RegExp(`^bg-\[(rgb\(.+))\]$`),
+    new RegExp(`^bg-\\[(rgb\(.+))\\]$`),
     ([, n]) => {
       return { 'background-color': n };
     },
     { autocomplete: [`bg-[rgb(<num>,<num>,<num>)]`] }
   ],
   [
-    new RegExp(`^bg-\[(rgba\(.+))\]$`),
+    new RegExp(`^bg-\\[(rgba\\(.+\\))\\]$`),
     ([, n]) => {
       return { 'background-color': n };
     },
@@ -45,6 +45,23 @@ Object.entries(colors!).forEach(([key, value]) => {
         { autocomplete: [`bg-${key}-${level}`, `bg-${key}-${level}/<num>`] }
       ]);
     });
+    backgroundColor.push([
+      new RegExp(`^bg-linear-to-(t|b|l|r|tr|tl|br|bl)-${key}(?:/(\\d+))?-${key}(?:/(\\d+))?$`),
+      ([, d, fromColor, toColor]) => {
+        return { 'background-image': `linear-gradient(to ${dM[d]}, ${value['DEFAULT'] + percentToHex(fromColor)}, ${value['DEFAULT'] + percentToHex(toColor)})` };
+      },
+      { autocomplete: [`bg-linear-to-(t|b|l|r|tr|tl|br|bl)-${key}(?:/(\\d+))?-${key}(?:/(\\d+))?$`] }
+    ]);
+    level.forEach((level) => {
+      if (level === 'DEFAULT') return;
+      backgroundColor.push([
+        new RegExp(`^bg-linear-to-(t|b|l|r|tr|tl|br|bl)-${key}-${level}(?:/(\\d+))?-${key}-${level}(?:/(\\d+))?$`),
+        ([, d, fromColor, toColor]) => {
+          return { 'background-image': `linear-gradient(to ${dM[d]}, ${value[level] + percentToHex(fromColor)}, ${value[level] + percentToHex(toColor)})` };
+        },
+        { autocomplete: [`bg-linear-to-(t|b|l|r|tr|tl|br|bl)-${key}-${level}(?:/(\\d+))?-${key}-${level}(?:/(\\d+))?$`] }
+      ]);
+    }); 
   }
 });
 const dM: Record<string, string> = {
@@ -61,7 +78,7 @@ export const backgroundImage: Rule[] = [
   ['bg-none', { 'background-image': 'none' }],
   [
     new RegExp(
-      `^bg-linear-to-(t|b|l|r|tr|tl|br|bl)-((?:#.+)(?:rgb\(.+))(?:rgba\(.+)))-((?:#.+)(?:rgb\(.+))(?:rgba\(.+)))$`
+      `^bg-linear-to-(t|b|l|r|tr|tl|br|bl)-((?:#[^-]+)|(?:rgb\\([^)]+\\))|(?:rgba\\([^)]+\\)))-((?:#[^-]+)|(?:rgb\\([^)]+\\))|(?:rgba\\([^)]+\\)))$`
     ),
     ([, d, fromColor, toColor]) => {
       return {
@@ -69,5 +86,12 @@ export const backgroundImage: Rule[] = [
       };
     },
     { autocomplete: [`bg-linear-to-(t|b|l|r|tr|tl|br|bl)-<color>-<color>`] }
-  ]
+  ],
+  [
+    new RegExp(`^bg-image-\\[(\\w[^\\]]+)\\]$`),
+    ([, n]) => {
+      return { 'background-image': n };
+    },
+    { autocomplete: [`bg-image-[<image>]`] }
+  ],
 ];

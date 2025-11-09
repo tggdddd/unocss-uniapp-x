@@ -56,7 +56,7 @@ export const fontSize: Rule[] = [
     { autocomplete: [`text-<num>`] }
   ],
   [
-    new RegExp(`^text-\[(\\d+.+)\]$`),
+    new RegExp(`^text-\\[(\\d+.*)\\]$`),
     ([, n]) => {
       return { 'font-size': n };
     },
@@ -92,7 +92,7 @@ export const fontWeight: Rule[] = [
 ];
 export const letterSpacing: Rule[] = [
   [
-    new RegExp(`^(-)?letter-spacing-(\d+(?:\.\d+)?)$`),
+    new RegExp(`^(-)?letter-spacing-(\\d+(?:\\.\\d+)?)$`),
     ([, sign, n], { theme }) => {
       return {
         'letter-spacing': sign
@@ -103,7 +103,7 @@ export const letterSpacing: Rule[] = [
     { autocomplete: [`letter-spacing-<num>`, `-letter-spacing-<num>`] }
   ],
   [
-    new RegExp(`^letter-spacing-\[(\d+.+)\]$`),
+    new RegExp(`^letter-spacing-\\[(\\d+.*)\\]$`),
     ([, n]) => {
       return { 'letter-spacing': n };
     },
@@ -136,7 +136,7 @@ export const lineHeight: Rule[] = [
     { autocomplete: [`leading-<num>`] }
   ],
   [
-    new RegExp(`^leading-\[(\\d+(?:\\.\\d+)?)\]$`),
+    new RegExp(`^leading-\\[(.+)\\]$`),
     ([, n]) => {
       return { 'line-height': n };
     },
@@ -157,21 +157,21 @@ export const textAlign: Rule[] = [
 export const color: Rule[] = [
   ['text-transparent', { color: 'transparent' }],
   [
-    new RegExp(`^text-\[(#.+)\]$`),
+    new RegExp(`^text-\\[(#\\w+)\\]$`),
     ([, n]) => {
       return { color: n };
     },
     { autocomplete: [`text-[#<hex>]`] }
   ],
   [
-    new RegExp(`^text-\[(rgb\(.+\))\]$`),
+    new RegExp(`^text-\\[(rgb\\(.+\\))\\]$`),
     ([, n]) => {
       return { color: n };
     },
     { autocomplete: [`text-[rgb(<num>,<num>,<num>)]`] }
   ],
   [
-    new RegExp(`^text-\[(rgba\(.+\))\]$`),
+    new RegExp(`^text-\\[(rgba\\(.+\\))\\]$`),
     ([, n]) => {
       return { color: n };
     },

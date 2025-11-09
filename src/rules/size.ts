@@ -15,8 +15,8 @@ export const width: Rule<Theme>[] = [
   ],
   [
     /^w-\[(.+)\]$/,
-    ([, sign, n]) => {
-      return { width: sign ? `-${n}` : `${n}` };
+    ([, n]) => {
+      return { width: n };
     },
     { autocomplete: [`w-[<num>(px|rpx|%)]`] }
   ],
@@ -38,8 +38,8 @@ export const height: Rule<Theme>[] = [
   ],
   [
     /^h-\[(.+)\]$/,
-    ([, sign, n]) => {
-      return { height: sign ? `-${n}` : `${n}` };
+    ([, n]) => {
+      return { height: n };
     },
     { autocomplete: [`h-[<num>(px|rpx|%)]`] }
   ],
@@ -60,8 +60,8 @@ export const minWidth: Rule<Theme>[] = [
   ],
   [
     /^min-w-\[(.+)\]$/,
-    ([, sign, n]) => {
-      return { 'min-width': sign ? `-${n}` : `${n}` };
+    ([, n]) => {
+      return { 'min-width': n };
     },
     { autocomplete: [`min-w-[<num>(px|rpx|%)]`] }
   ]
@@ -80,8 +80,8 @@ export const minHeight: Rule<Theme>[] = [
   ],
   [
     /^min-h-\[(.+)\]$/,
-    ([, sign, n]) => {
-      return { 'min-height': sign ? `-${n}` : `${n}` };
+    ([, n]) => {
+      return { 'min-height': n };
     },
     { autocomplete: [`min-h-[<num>(px|rpx|%)]`] }
   ]
@@ -100,8 +100,8 @@ export const maxWidth: Rule<Theme>[] = [
   ],
   [
     /^max-w-\[(.+)\]$/,
-    ([, sign, n]) => {
-      return { 'max-width': sign ? `-${n}` : `${n}` };
+    ([, n]) => {
+      return { 'max-width': n };
     },
     { autocomplete: [`max-w-[<num>(px|rpx|%)]`] }
   ]

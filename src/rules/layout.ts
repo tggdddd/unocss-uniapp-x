@@ -25,7 +25,7 @@ export const position: Rule[] = [
 ];
 export const inset: Rule[] = [
   [
-    /^(-)?(?:top|right|bottom|left)-(\d+(?:\.\d+)?)$/,
+    /^(-)?(top|right|bottom|left)-(\d+(?:\.\d+)?)$/,
     ([, sign, d, n], { theme }) => {
       return {
         [d]: sign
@@ -42,7 +42,7 @@ export const inset: Rule[] = [
   ],
 
   [
-    /^(?:top|right|bottom|left)-\[(.+)\]$/,
+    /^(top|right|bottom|left)-\[(.+)\]$/,
     ([, d, n]) => {
       return { [d]: n };
     },
