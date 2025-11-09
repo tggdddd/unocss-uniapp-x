@@ -6,7 +6,6 @@ type SpacingProps = { [key: string]: string };
 
 const createSpacingRule = (
   prefix: string,
-  property: string,
   directions: { [key: string]: string[] }
 ): Rule<Theme>[] => {
   const rules: Rule<Theme>[] = [];
@@ -23,6 +22,18 @@ const createSpacingRule = (
       { autocomplete: [`${prefix}-${suffix.length==0?'':(suffix+'-')}<num>`, `-${prefix}-${suffix.length==0?'':(suffix+'-')}<num>`] }
     ]);
   });
+  if(prefix=='m'){
+    Object.entries(directions).forEach(([suffix, props]) => {
+      rules.push([
+        new RegExp(`^${prefix}-${suffix.length==0?'':(suffix+'-')}auto$`),
+        ([, ]) => {
+          const spacingValue = 'auto';
+          return props.reduce((acc, prop) => ({ ...acc, [prop]: spacingValue }), {} as SpacingProps);
+        },
+        { autocomplete: [`${prefix}-${suffix.length==0?'':(suffix+'-')}auto`] }
+      ]);
+    });
+  }
 
   // Arbitrary value rules
   Object.entries(directions).forEach(([suffix, props]) => {
@@ -56,5 +67,5 @@ const marginDirections = {
   '': ['margin']
 };
 
-export const padding: Rule<Theme>[] = createSpacingRule('p', 'padding', paddingDirections);
-export const margin: Rule<Theme>[] = createSpacingRule('m', 'margin', marginDirections);
+export const padding: Rule<Theme>[] = createSpacingRule('p', paddingDirections);
+export const margin: Rule<Theme>[] = createSpacingRule('m', marginDirections);
