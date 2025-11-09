@@ -1,0 +1,78 @@
+{
+  "name": "unocss-uniapp-x",
+  "version": "1.0.1",
+  "author": "JACK",
+  "license": "ISC",
+  "description": "Unocss plugin for uniapp-x (only app support style)",
+  "type": "module",
+  "dependencies": {
+    "@unocss/core": "^0.58.0",
+    "unplugin-transform-class": "^0.2.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@rollup/pluginutils": "^5.1.0",
+    "@types/node": "^24.10.0",
+    "concurrently": "^9.2.1",
+    "eslint": "^9.39.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
+    "node-polyfill-webpack-plugin": "^4.1.0",
+    "path": "^0.12.7",
+    "prettier": "^3.6.2",
+    "rimraf": "^5.0.10",
+    "standard-version": "^9.5.0",
+    "ts-loader": "^9.5.4",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.8",
+    "webpack": "^5.102.1",
+    "webpack-cli": "^6.0.1"
+  },
+  "scripts": {
+    "dev": "tsc && node dist/index.js",
+    "dev:watch": "concurrently \"npm run type-check:watch\" \"npm run build:watch\"",
+    "dev:server": "nodemon --watch dist dist/index.js",
+    "build": "npm run clean && tsc --emitDeclarationOnly && webpack --mode production",
+    "build:dev": "npm run clean && tsc --emitDeclarationOnly && webpack --mode development",
+    "build:watch": "webpack --mode development --watch",
+    "build:analyze": "npm run clean && tsc --emitDeclarationOnly && webpack --mode production --analyze",
+    "clean": "rimraf dist",
+    "clean:all": "npm run clean && rimraf node_modules/.cache",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "tsc --noEmit --watch",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,json,css,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,json,css,md}\"",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:verbose": "jest --verbose",
+    "preview": "npm run build && serve dist",
+    "preview:prod": "npm run build && node dist/index.js",
+    "prepare": "husky install",
+    "pre-commit": "lint-staged",
+    "validate": "npm run type-check && npm run lint && npm run test",
+    "ci:build": "npm run validate && npm run build",
+    "release": "standard-version",
+    "release:minor": "standard-version --release-as minor",
+    "release:major": "standard-version --release-as major",
+    "release:patch": "standard-version --release-as patch",
+    "postrelease": "git push --follow-tags origin main"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "*.d.ts"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  }
+}
