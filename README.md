@@ -43,19 +43,19 @@ yarn add unocss-uniapp-x @unocss/core @unocss/vite -D
 
 ```typescript
 import { defineConfig } from 'vite'
+import uni from '@dcloudio/vite-plugin-uni';
 import UnoCSS from '@unocss/vite'
 import presetUniAppX from 'unocss-uniapp-x'
 
-export default defineConfig({
-  plugins: [
-    UnoCSS({
-      presets: [
-        presetUniAppX({
-          // 配置选项
-        })
-      ]
-    })
-  ]
+export default defineConfig(async () => {
+	const UnoCSS = await import('unocss/vite').then(i => i.default)
+	return {
+		root:__dirname,
+		plugins: [
+			uni(),
+			UnoCSS()
+    ]
+	}
 })
 ```
 
@@ -65,6 +65,16 @@ export default defineConfig({
 import presetUniAppX from 'unocss-uniapp-x'
 
 export default {
+  mode: "vue-scoped",
+  transformCSS: "pre",
+  // 内容配置
+  content: {
+    filesystem: ["pipeline"],
+    pipeline: {
+      include: [/\.(uvue)($|\?)/],
+      exclude: [/\.(css|postcss|sass|scss|less|stylus|styl|uts)($|\?)/],
+    }
+  },
   presets: [
     presetUniAppX({
       // 包含 .uvue 文件
@@ -74,16 +84,7 @@ export default {
       transformClass: true,
       
       // 启用类标签
-      classTags: true,
-      
-      // 内容配置
-      content: {
-        filesystem: ["pipeline"],
-        pipeline: {
-          include: [/\.(uvue)($|\?)/],
-          exclude: [/\.(css|postcss|sass|scss|less|stylus|styl|uts)($|\?)/],
-        }
-      }
+      classTags: true
     })
   ],
 }
@@ -172,7 +173,7 @@ export default {
 
 ### 背景 (Background)
 - `background-color`
-- `background-size`, `background-position`
+- `background-size`, `background-position`, `background-image`
 
 ### 效果 (Effects)
 - `opacity`
