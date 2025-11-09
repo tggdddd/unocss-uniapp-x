@@ -9,3 +9,4 @@ export * from './spacing';
 export * from './transform';
 export * from './transition';
 export * from './typography';
+export * from './safe-area';

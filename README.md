@@ -53,7 +53,10 @@ export default defineConfig(async () => {
 		root:__dirname,
 		plugins: [
 			uni(),
-			UnoCSS()
+			UnoCSS({
+        mode: "vue-scoped",
+			  transformCSS: "pre",
+      })
     ]
 	}
 })
@@ -65,8 +68,6 @@ export default defineConfig(async () => {
 import presetUniAppX from 'unocss-uniapp-x'
 
 export default {
-  mode: "vue-scoped",
-  transformCSS: "pre",
   // 内容配置
   content: {
     filesystem: ["pipeline"],
