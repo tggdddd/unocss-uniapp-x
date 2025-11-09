@@ -50,7 +50,7 @@ Object.entries(colors!).forEach(([key, value]) => {
       ([, d, fromColor, toColor]) => {
         return { 'background-image': `linear-gradient(to ${dM[d]}, ${value['DEFAULT'] + percentToHex(fromColor)}, ${value['DEFAULT'] + percentToHex(toColor)})` };
       },
-      { autocomplete: [`bg-linear-to-(t|b|l|r|tr|tl|br|bl)-${key}(?:/(\\d+))?-${key}(?:/(\\d+))?$`] }
+      { autocomplete: [`bg-linear-to-(t|b|l|r|tr|tl|br|bl)-${key}-${key}$`] }
     ]);
     level.forEach((level) => {
       if (level === 'DEFAULT') return;
@@ -59,7 +59,7 @@ Object.entries(colors!).forEach(([key, value]) => {
         ([, d, fromColor, toColor]) => {
           return { 'background-image': `linear-gradient(to ${dM[d]}, ${value[level] + percentToHex(fromColor)}, ${value[level] + percentToHex(toColor)})` };
         },
-        { autocomplete: [`bg-linear-to-(t|b|l|r|tr|tl|br|bl)-${key}-${level}(?:/(\\d+))?-${key}-${level}(?:/(\\d+))?$`] }
+        { autocomplete: [`bg-linear-to-(t|b|l|r|tr|tl|br|bl)-${key}-${level}(/<opacity>)-${key}-${level}(/<opacity>)`] }
       ]);
     }); 
   }

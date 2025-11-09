@@ -119,7 +119,6 @@ export default {
 | `preflight` | `boolean` | `true` | 是否启用预设样式 |
 | `transformClass` | `boolean` | `false` | 是否转换类名中的特殊字符 |
 | `transformRules` | `object` | 见下方 | 类名转换规则 |
-| `whRpx` | `boolean` | `true` | 是否启用 rpx 单位 |
 | `numUnit` | `string` | `px` | 数字单位 |
 | `numScale` | `number` | `1` | 数字缩放比例 |
 
