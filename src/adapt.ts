@@ -78,7 +78,7 @@ export function adaptUnoCSS() {
     // 写回文件
     fs.writeFileSync(unocssVitePath, content, 'utf-8');
 
-    // console.log('[unocss-uni-app-x] 成功适配 @unocss/vite 以支持 .uvue 文件');
+    console.log('[unocss-uni-app-x] 成功适配 @unocss/vite 以支持 .uvue 文件,请重启 项目');
     return true;
   } catch (error) {
     console.error('[unocss-uni-app-x] 适配 UnoCSS 时出错:', error);
