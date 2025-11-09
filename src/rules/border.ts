@@ -136,16 +136,16 @@ const createBorderColorRules = (): Rule[] => {
     if (typeof value !== 'string' && value !== undefined) {
       const level = Object.keys(value);
       rules.push([
-        new RegExp(`^border(?:-(t|b|l|r|y|x))?-${key}(?:@(\\d+))?$`),
+        new RegExp(`^border(?:-(t|b|l|r|y|x))?-${key}(?:/(\\d+))?$`),
         ([, o]) => {
           return { 'border-color': value['DEFAULT'] + percentToHex(o) };
         },
-        { autocomplete: [`border-${key}`, `border-${key}@<num>`] }
+        { autocomplete: [`border-${key}`, `border-${key}/<num>`] }
       ]);
       level.forEach((level) => {
         if (level === 'DEFAULT') return;
         rules.push([
-          new RegExp(`^border(?:-(t|b|l|r|y|x))?-${key}-${level}(?:@(\\d+))?$`),
+          new RegExp(`^border(?:-(t|b|l|r|y|x))?-${key}-${level}(?:/(\\d+))?$`),
           ([, o]) => {
             return { 'border-color': value[level] + percentToHex(o) };
           },

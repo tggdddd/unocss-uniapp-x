@@ -29,20 +29,20 @@ Object.entries(colors!).forEach(([key, value]) => {
   if (typeof value !== 'string' && value !== undefined) {
     const level = Object.keys(value);
     backgroundColor.push([
-      new RegExp(`^bg-${key}(?:@(\\d+))?$`),
+      new RegExp(`^bg-${key}(?:/(\\d+))?$`),
       ([, o]) => {
         return { 'background-color': value['DEFAULT'] + percentToHex(o) };
       },
-      { autocomplete: [`bg-${key}`, `bg-${key}@<num>`] }
+      { autocomplete: [`bg-${key}`, `bg-${key}/<num>`] }
     ]);
     level.forEach((level) => {
       if (level === 'DEFAULT') return;
       backgroundColor.push([
-        new RegExp(`^bg-${key}-${level}(?:@(\\d+))?$`),
+        new RegExp(`^bg-${key}-${level}(?:/(\\d+))?$`),
         ([, o]) => {
           return { 'background-color': value[level] + percentToHex(o) };
         },
-        { autocomplete: [`bg-${key}-${level}`, `bg-${key}-${level}@<num>`] }
+        { autocomplete: [`bg-${key}-${level}`, `bg-${key}-${level}/<num>`] }
       ]);
     });
   }
