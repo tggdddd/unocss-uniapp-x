@@ -1,36 +1,37 @@
 import type { Rule } from '@unocss/core';
 import type { Theme } from '../theme/types';
 import { time } from '../utils';
+const allProps = [
+  'all',
+  'none',
+  'width',
+  'height',
+  'margin',
+  'margin-top',
+  'margin-bottom',
+  'margin-left',
+  'margin-right',
+  'left',
+  'right',
+  'top',
+  'bottom',
+  'padding',
+  'padding-left',
+  'padding-right',
+  'padding-top',
+  'padding-bottom',
+  'opacity',
+  'background-color',
+  'border-color',
+  'border-top-color',
+  'border-bottom-color',
+  'border-left-color',
+  'border-right-color',
+  'transform'
+];
 function resolveTransitionProperty(prop: string): string | undefined {
   let p: string | undefined;
-  const allProps = [
-    'all',
-    'none',
-    'width',
-    'height',
-    'margin',
-    'margin-top',
-    'margin-bottom',
-    'margin-left',
-    'margin-right',
-    'left',
-    'right',
-    'top',
-    'bottom',
-    'padding',
-    'padding-left',
-    'padding-right',
-    'padding-top',
-    'padding-bottom',
-    'opacity',
-    'background-color',
-    'border-color',
-    'border-top-color',
-    'border-bottom-color',
-    'border-left-color',
-    'border-right-color',
-    'transform'
-  ];
+  
   if (allProps.includes(prop)) {
     p = prop;
   } else {
@@ -73,7 +74,7 @@ export const transitions: Rule<Theme>[] = [
       }
     },
     {
-      autocomplete: 'transition-$transitionProperty-$duration'
+      autocomplete: `transition-${allProps.join('|')}-<number>(|ms|s)`
     }
   ],
 
@@ -81,13 +82,13 @@ export const transitions: Rule<Theme>[] = [
   [
     /^(?:transition-)?duration-(.+)$/,
     ([, d]) => ({ 'transition-duration': time(d) }),
-    { autocomplete: ['transition-duration-$duration', 'duration-$duration'] }
+    { autocomplete: ['transition-duration-<number>(|ms|s)', 'duration-<150|150ms|150s>'] }
   ],
 
   [
     /^(?:transition-)?delay-(.+)$/,
     ([, d]) => ({ 'transition-delay': time(d) }),
-    { autocomplete: ['transition-delay-$duration', 'delay-$duration'] }
+    { autocomplete: ['transition-delay-<number>(|ms|s)', 'delay-<number>(|ms|s)'] }
   ],
 
   [
@@ -110,8 +111,8 @@ export const transitions: Rule<Theme>[] = [
     },
     {
       autocomplete: [
-        'transition-property-$transitionProperty',
-        'property-$transitionProperty'
+        `transition-property-${allProps.join('|')}`,
+        `property-${allProps.join('|')}`
       ]
     }
   ],

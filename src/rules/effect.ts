@@ -5,7 +5,7 @@ export const boxShadow: Rule[] = [
   [
     new RegExp(`^shadow-\\[(.+)\\]$`),
     ([, n]) => {
-      return { 'box-shadow': n };
+      return { 'box-shadow': n.replaceAll('_', ' ') };
     },
     { autocomplete: [`box-shadow-[<box-shadow>]`] }
   ]
@@ -15,7 +15,7 @@ export const textShadow: Rule[] = [
   [
     new RegExp(`^text-shadow-\\[(.+)\\]$`),
     ([, n]) => {
-      return { 'text-shadow': n };
+      return { 'text-shadow': n.replaceAll('_', ' ') };
     },
     { autocomplete: [`text-shadow-[<text-shadow>]`] }
   ]

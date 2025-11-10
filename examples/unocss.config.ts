@@ -13,7 +13,8 @@ export default {
     presetUniAppX({
       // 包含 .uvue 文件
       include: [/\.(uvue)($|\?)/],
-      
+      numberUnit:'px',
+      numberScale:1,
       // 启用类名转换
       transformClass: true,
       

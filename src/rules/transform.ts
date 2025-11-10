@@ -5,7 +5,7 @@ export const transform: Rule[] = [
   [
     /^transform-\[(.+)\]$/,
     ([, v]) => {
-      return { transform: v };
+      return { transform: v.replaceAll('_', ' ') };
     },
     { autocomplete: [`transform-[<transform>]`] }
   ],
@@ -75,13 +75,13 @@ export const transform: Rule[] = [
     ([, v]) => {
       return { transform: `translateX(${v})` };
     },
-    { autocomplete: [`translate-x-[<translate-x>]`] }
+    { autocomplete: [`translate-x-[<translate>]`] }
   ],
   [
     /^translate-y-\[(\w+)\]$/,
     ([, v]) => {
       return { transform: `translateY(${v})` };
     },
-    { autocomplete: [`translate-y-[<translate-y>]`] }
+    { autocomplete: [`translate-y-[<translate>]`] }
   ]
 ];

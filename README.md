@@ -87,7 +87,10 @@ export default {
       
       // 启用类名转换
       transformClass: true,
-      
+      // 数字单位
+      numUnit:'px',
+      // 数字缩放比例
+      numScale:1,
       // 启用类标签
       classTags: true
     })
@@ -101,14 +104,34 @@ export default {
 
 ```vue
 <template>
-  <view class="flex flex-col items-center justify-center h-screen bg-gray-100">
-    <text class="text-2xl font-bold text-blue-500 mb-4">Hello uni-app-x!</text>
-    <view class="w-200 h-100 bg-white rounded-lg shadow-md p-4">
-      <text class="text-gray-700">这是一个使用 UnoCSS 的示例</text>
+  <view class="flex flex-col items-center justify-center bg-gray-100">
+    <text class="text-12 font-bold text-blue-500 mb-4">Hello uni-app-x!</text>
+    <view class="w-200 h-100 bg-white rounded-12 p-4">
+      <text class="text-gray-700 text-[12px]">这是一个使用 UnoCSS 的示例</text>
     </view>
   </view>
 </template>
 ```
+
+## 🧩 编辑器插件与类名自动完成（推荐）
+
+为获得更好的开发体验（类名自动完成、悬浮预览与诊断），建议安装 UnoCSS 的编辑器插件：
+
+- VS Code：安装扩展 "UnoCSS"（[Marketplace 链接](https://marketplace.visualstudio.com/items?itemName=antfu.unocss))
+- JetBrains 系列（WebStorm、IntelliJ 等）：安装插件 "UnoCSS"（[JetBrains Marketplace 链接](https://plugins.jetbrains.com/plugin/22288-unocss))
+
+如果你在使用 `.uvue` 文件，建议在 VS Code 中将其关联为 Vue 文件以获得更佳的语法高亮与插件支持：
+
+```jsonc
+// .vscode/settings.json 或 用户设置中添加
+{
+  "files.associations": {
+    "*.uvue": "vue"
+  }
+}
+```
+
+安装并重启编辑器后，即可在 `.uvue` 中获得 UnoCSS 类名的智能补全与提示。
 
 ## ⚙️ 配置选项
 
@@ -144,51 +167,104 @@ export default {
 }
 ```
 
-## 🎨 支持的 CSS 规则
+## 🎨 规则示例
 
-### 布局 (Layout)
-- `display` - flex, block, inline, etc.
-- `position` - relative, absolute, fixed, etc.
-- `z-index` - 层级控制
+下列为预设内置的原子类规则示例，数值类支持纯数字（按 `theme.numUnit` 与 `numScale` 转换）与 `[]` 自定义值（原样输出）。
 
-### 弹性盒子 (Flexbox)
-- `flex`, `flex-direction`, `flex-wrap`
-- `justify-content`, `align-items`, `align-content`
-- `flex-grow`, `flex-shrink`, `flex-basis`
+### 布局（layout.ts）
+- Box Sizing
+  - `box-border` → box-sizing: border-box
+  - `box-content` → box-sizing: content-box
+- 显示与可见性
+  - `flex` | `none`
+  - `visible` | `hidden`
+- 溢出
+  - `overflow-hidden` | `overflow-visible`
+  - `overflow-x-hidden` | `overflow-y-hidden`（亦支持 visible）
+- 定位
+  - `relative` | `absolute` | `fixed`
+- 位置（inset）
+  - `top-10` `right-2.5` `bottom-[20px]` `left-full` `-top-4`
+- 层级
+  - `z-10` `z-100` `-z-1`
 
-### 尺寸 (Size)
-- `width`, `height`
-- `min-width`, `min-height`
-- `max-width`, `max-height`
+### 弹性盒子（flexbox.ts）
+- 方向与换行
+  - `flex-row` | `flex-col` | `flex-row-reverse` | `flex-col-reverse`
+  - `flex-wrap` | `flex-nowrap` | `flex-wrap-reverse`
+- 弹性项
+  - `flex-1` | `flex-none` | `flex-auto` | `flex-initial`
+  - `grow` | `grow-0` | `shrink` | `shrink-0`
+  - `basis-20` `basis-[50%]` `basis-full` `basis-auto`（亦支持 `flex-basis-…`）
+- 主轴/交叉轴对齐
+  - `justify-center` | `justify-between` | `justify-around` | `justify-evenly`
+  - `items-center` | `items-start` | `items-end` | `items-stretch`
+  - `content-center` | `content-between` | `content-around` | `content-stretch`
+  - `self-center` | `self-start` | `self-end` | `self-stretch` | `self-auto`
 
-### 间距 (Spacing)
-- `margin` - m, mt, mr, mb, ml, mx, my
-- `padding` - p, pt, pr, pb, pl, px, py
+### 尺寸（size.ts）
+- 宽高
+  - `w-200` `w-[50%]` `w-auto` `w-full`
+  - `h-100` `h-[20px]` `h-auto` `h-full`
+- 最小/最大 宽高
+  - `min-w-100` `min-w-[10rpx]`
+  - `min-h-50` `min-h-[2px]`
+  - `max-w-300` `max-w-[80%]`
+  - `max-h-400` `max-h-[60px]`
 
-### 排版 (Typography)
-- `font-size`, `font-weight`, `font-family`
-- `line-height`, `letter-spacing`
-- `text-align`, `text-decoration`, `text-transform`
-- `color`
+### 间距（spacing.ts）
+- 内边距（padding）：`p-4` `px-10` `py-2.5` `pt-[12px]`
+- 外边距（margin）：`m-4` `mx-10` `my-2` `mt-[12px]` `-mb-6` `m-auto`
 
-### 边框 (Border)
-- `border`, `border-width`, `border-style`, `border-color`
-- `border-radius`
+### 排版（typography.ts）
+- 字体族：`font-sans` | `font-serif` | `font-mono`
+- 字号：`text-12` `text-[14px]`
+- 字体样式/粗细：`font-style-italic` | `font-bold` | `font-700`
+- 字间距：`letter-spacing-1.5` `-letter-spacing-0.5` `letter-spacing-[2px]`
+- 行数截断：`line-clamp-2`
+- 行高：`leading-20` `leading-[1.6em]`
+- 对齐：`text-align-left` | `text-align-center` | `text-align-right`
+- 文本颜色：
+  - 直接值：`text-[#333333]` `text-[rgb(34,34,34)]` `text-[rgba(0,0,0,0.6)]`
+  - 主题色：`text-blue` `text-blue/80` `text-blue-500` `text-blue-500/60`
+- 文本装饰与溢出：`underline` `line-through` `ellipsis` `clip`
+- 空白处理：`normal` `nowrap`
 
-### 背景 (Background)
-- `background-color`
-- `background-size`, `background-position`, `background-image`
+### 边框（border.ts）
+- 圆角：`rounded-8` `rounded-[12px]` `rounded-tr-6` `rounded-full` `rounded-none`
+- 边框宽度：`border-1` `border-y-2` `border-t-[3px]`
+- 边框样式：`border-solid` `border-dashed` `border-dotted`（支持 t/b/l/r/y/x 定位）
+- 边框颜色：
+  - 直接值：`border-[#000]` `border-[rgb(0,0,0)]` `border-[rgba(0,0,0,0.2)]`
+  - 主题色：`border-blue` `border-blue/70` `border-y-blue-500/60` `border-t-blue-600`
 
-### 效果 (Effects)
-- `opacity`
-- `box-shadow`
+### 背景（background.ts）
+- 背景色：
+  - 直接值：`bg-[#fafafa]` `bg-[rgb(250,250,250)]` `bg-[rgba(0,0,0,0.05)]`
+  - 主题色：`bg-blue` `bg-blue/80` `bg-blue-500` `bg-blue-500/60`
+- 渐变：
+  - 自定义色：`bg-linear-to-r-#000-#fff` `bg-linear-to-tr-[rgb(0,0,0)]-[rgba(0,0,0,0.2)]`
+  - 主题色：`bg-linear-to-r-blue-blue` `bg-linear-to-tr-blue-500-blue-500`
+- 背景图：`bg-image-[*]` | `bg-none`
 
-### 变换 (Transform)
-- `transform` - translate, rotate, scale, etc.
+### 效果（effect.ts）
+- 透明度：`opacity-60` `opacity-[0.25]`
+- 阴影：`shadow-[0_2px_8px_rgba(0,0,0,0.15)]` `text-shadow-[1px_1px_2px_#000]`
 
-### 过渡 (Transition)
-- `transition`
-- `transition-property`, `transition-duration`, `transition-timing-function`
+### 变换（transform.ts）
+- 自定义：`transform-[rotate(10deg)_scale(1.1)]`
+- 旋转：`rotate-45` `rotate-x-30` `rotate-y-15` `rotate-z-90`
+- 缩放：`scale-1.2` `scale-x-0.5` `scale-y-2`
+- 位移：`translate-[10px,20px]` `translate-x-[10px]` `translate-y-[50%]`
+
+### 过渡（transition.ts）
+- 速写：`transition`（all,ease,150ms） `transition-opacity-300`
+- 时序：`duration-200` `delay-150` `ease-linear|in|out|in-out`
+- 属性：`property-opacity` `transition-property-[transform,opacity]`
+- 禁用：`transition-none`
+
+### 安全区域（safe-area.ts）
+- `p-safe` `pt-safe` `pb-safe` `pl-safe` `pr-safe`
 
 ## 🔧 自动适配功能
 

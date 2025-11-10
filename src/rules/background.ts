@@ -59,7 +59,7 @@ Object.entries(colors!).forEach(([key, value]) => {
         ([, d, fromColor, toColor]) => {
           return { 'background-image': `linear-gradient(to ${dM[d]}, ${value[level] + percentToHex(fromColor)}, ${value[level] + percentToHex(toColor)})` };
         },
-        { autocomplete: [`bg-linear-to-(t|b|l|r|tr|tl|br|bl)-${key}-${level}(/<opacity>)-${key}-${level}(/<opacity>)`] }
+        { autocomplete: [`bg-linear-to-(t|b|l|r|tr|tl|br|bl)-${key}-${level}-${key}-${level}`] }
       ]);
     }); 
   }
@@ -90,7 +90,7 @@ export const backgroundImage: Rule[] = [
   [
     new RegExp(`^bg-image-\\[(\\w[^\\]]+)\\]$`),
     ([, n]) => {
-      return { 'background-image': n };
+      return { 'background-image': n.replaceAll('_', ' ') };
     },
     { autocomplete: [`bg-image-[<image>]`] }
   ],

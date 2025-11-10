@@ -40,7 +40,7 @@ const createSpacingRule = (
     rules.push([
       new RegExp(`^${prefix}-${suffix.length==0?'':(suffix+'-')}\\[(.+)\\]$`),
       ([, n]) => props.reduce((acc, prop) => ({ ...acc, [prop]: n }), {} as SpacingProps),
-      { autocomplete: [`${prefix}-${suffix.length==0?'':(suffix+'-')}[<value>]`] }
+      { autocomplete: [`${prefix}-${suffix.length==0?'':(suffix+'-')}[<number>(px|%|rpx)]`] }
     ]);
   });
 
