@@ -19,7 +19,15 @@ export default {
       transformClass: true,
       
       // 启用类标签
-      classTags: true
+      classTags: true,
+      // 是否启用暗色模式  parent|near|none
+      darkEnable:'none',
+    
+      // 暗色模式类名 
+      darkClass:'theme-dark',
+    
+      // 暗色模式类名前缀 如 dark 即 dark:text-white
+      darkVariant:'dark'
     })
   ],
 }

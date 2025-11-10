@@ -92,7 +92,15 @@ export default {
       // 数字缩放比例
       numScale:1,
       // 启用类标签
-      classTags: true
+      classTags: true,
+      // 是否启用暗色模式  parent|near|none
+      darkEnable:'none',
+    
+      // 暗色模式类名 
+      darkClass:'theme-dark',
+    
+      // 暗色模式类名前缀 如 dark 即 dark:text-white
+      darkVariant:'dark'
     })
   ],
 }
@@ -144,6 +152,9 @@ export default {
 | `transformRules` | `object` | 见下方 | 类名转换规则 |
 | `numUnit` | `string` | `px` | 数字单位 |
 | `numScale` | `number` | `1` | 数字缩放比例 |
+| `darkEnable` | `string` | `none` | 是否启用暗色模式 parent|near|none |
+| `darkClass` | `string` | `theme-dark` | 暗色模式类名 |
+| `darkVariant` | `string` | `dark` | 暗色模式类名前缀 |
 
 ### 默认转换规则
 
@@ -265,6 +276,100 @@ export default {
 
 ### 安全区域（safe-area.ts）
 - `p-safe` `pt-safe` `pb-safe` `pl-safe` `pr-safe`
+
+
+## 🌙 暗色模式配置
+
+本预设支持暗色模式（Dark Mode），通过 `dark:` 前缀即可为元素添加暗色模式下的样式。
+
+生成示例：  
+```
+text-white -> .text-white{color:#ffffff}
+near: dark:text-white -> .theme-dark .dark:text-white{color:#ffffff}
+parent: dark:text-white -> .theme-dark,.dark:text-white{color:#ffffff}
+both: dark:text-white -> .theme-dark .dark:text-white{color:#ffffff},.theme-dark,.dark:text-white{color:#ffffff}
+```
+
+### 基础配置
+
+在 `unocss.config.ts` 中启用暗色模式转换器：
+
+```typescript
+import presetUniAppX from 'unocss-uniapp-x'
+
+export default {
+  presets: [
+    presetUniAppX({
+      darkEnable:'near',
+      darkClass:'theme-dark',
+      darkVariant:'dark'
+    })
+  ]
+}
+```
+
+### 使用示例
+
+```vue
+<template>
+  <view class="bg-white dark:bg-gray-900" :class="{ 'theme-dark': isDark }">
+    <text class="text-gray-900 dark:text-white" :class="{ 'theme-dark': isDark }">
+      这段文字在亮色模式下是深色，暗色模式下是白色
+    </text>
+    <view class="border-gray-200 dark:border-gray-700 border-1 p-4" :class="{ 'theme-dark': isDark }">
+      <text class="text-blue-500 dark:text-blue-400" :class="{ 'theme-dark': isDark }">蓝色文字</text>
+    </view>
+  </view>
+</template>
+```
+
+### ⚠️ APP 端重要限制
+
+**uni-app-x 的 APP 端不支持通过父级样式修改来控制子元素样式**，这意味着：
+
+❌ **不支持**（父级控制子元素）：
+```vue
+<view :class="{ 'theme-dark': isDark }">
+  <!-- 子元素的 dark: 样式切换后不会立即生效 -->
+  <text class="dark:text-white">文字</text>
+</view>
+```
+
+✅ **正确做法**（为每个子元素单独添加响应式类名）：
+```vue
+<view class="bg-white dark:bg-gray-900" :class="{ 'theme-dark': isDark }" v-if="show">
+  <text class="text-gray-900 dark:text-white">标题</text>
+  <text class="text-gray-600 dark:text-gray-300">副标题</text>
+  <view class="bg-gray-100 dark:bg-gray-800 p-4">
+    <text class="text-black dark:text-white">内容</text>
+  </view>
+</view>
+<script setup>
+function toggleShow() {
+  isDark.value = !isDark.value
+  show.value = !show.value
+  nextTick(() => {
+    show.value = !show.value
+  })
+}
+</script>
+```
+
+### 配置选项
+
+| 选项 | 类型 | 默认值 | 描述 |
+|------|------|--------|------|
+| `darkVariant` | `string` | `'dark'` | 暗色模式类名前缀 |
+
+### 支持的样式
+
+暗色模式支持所有预设的样式规则，包括：
+
+- 文本颜色：`dark:text-white` `dark:text-gray-300`
+- 背景色：`dark:bg-gray-900` `dark:bg-blue-800`
+- 边框色：`dark:border-gray-700` `dark:border-blue-600`
+- 透明度：`dark:opacity-80`
+- 以及所有其他样式规则
 
 ## 🔧 自动适配功能
 

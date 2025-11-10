@@ -32,7 +32,10 @@ interface Options {
 const defaultOptions = {
   classTags: true,
   include: [/\.[jt]sx?$/, /\.vue$/, /\.vue\?vue/],
-  exclude: [/[\\/]node_modules[\\/]/, /[\\/]\.git[\\/]/]
+  exclude: [/[\\/]node_modules[\\/]/, /[\\/]\.git[\\/]/],
+  darkEnable:'none',
+  darkClass:'theme-dark',
+  darkVariant:'dark'
 };
 
 export default function transformerClass(

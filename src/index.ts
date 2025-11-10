@@ -5,7 +5,7 @@ import * as rules from './rules';
 import transformerClass from './transformers/index';
 import type { Theme } from './theme';
 import { autoAdapt } from './adapt';
-
+import transformerDark from './transformers/transform-dark';
 const defaultRules = {
   '.': '_dl_',
   '/': '_sl_',
@@ -25,12 +25,21 @@ const defaultRules = {
 };
 
 export interface PresetUniAppXOptions extends PresetOptions, Theme {}
-export const presetUniAppX = definePreset((options: PresetOptions = {}) => {
+export const presetUniAppX = definePreset<PresetUniAppXOptions>((options: PresetOptions = {}) => {
   options.preflight = options.preflight ?? true;
   options.transformRules = options.transformRules ?? defaultRules;
   options.whRpx = options.whRpx ?? true;
   options.transformer = options.transformer ?? [];
-
+  options.darkEnable = options.darkEnable ?? 'near';
+  options.darkClass = options.darkClass ?? 'theme-dark';
+  options.darkVariant = options.darkVariant ?? 'dark';
+  const transforms = [];
+  if(options.darkEnable&&options.darkEnable!=='none'){
+    transforms.push(transformerDark(options));
+  }
+  if(options.transformClass){
+    transforms.push(transformerClass(options));
+  }
   return {
     name: 'unocss-uni-app-x',
     theme: {
@@ -50,9 +59,22 @@ export const presetUniAppX = definePreset((options: PresetOptions = {}) => {
         css.selector = transformEscapESelector(
           css.selector,
           options.transformRules
-        );
+      );
+        console.log('raw',css.selector)
+      // 暗色模式
+      if (options.darkEnable&&options.darkEnable!=='none'){
+        const place = '.'+options.darkVariant+(options.transformClass?options.transformRules[':']??':':':');
+        if(options.darkEnable==='parent'){
+          css.selector = css.selector.replace(place, `.${options.darkClass} ${place}`);
+        }else if(options.darkEnable==='near'){
+          css.selector = css.selector.replace(place, `.${options.darkClass}${place}`);
+        }else if(options.darkEnable==='both'){
+          css.selector = css.selector.replace(place, `.${options.darkClass} ${place},.${options.darkClass}${place}`);
+        }
+      }
+        
     },
-    transformers: options.transformClass ? [transformerClass(options)] : [],
+    transformers: transforms,
     autocomplete:{
       templates:[],
       shorthands:{

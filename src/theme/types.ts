@@ -12,4 +12,12 @@ export interface Theme {
   numUnit?: 'px' | 'rpx';
   // 尺寸换算 默认单位的数字换算
   numScale?: number;
+  // 是否启用暗色模式  parent|near|none|both
+  darkEnable?:'parent'|'near'|'none'|'both'
+
+  // 暗色模式类名 
+  darkClass?:string
+
+  // 暗色模式类名前缀 如 dark 即 dark:text-white
+  darkVariant?:string
 }
