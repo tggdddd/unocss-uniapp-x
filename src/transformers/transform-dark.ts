@@ -1,5 +1,4 @@
 import type { SourceCodeTransformer } from '@unocss/core'
-import { escapeRegExp, expandVariantGroup } from '@unocss/core'
 
 export interface DarkOptions {
   // 暗色模式类名前缀 如 dark 即 dark:text-white
