@@ -60,7 +60,6 @@ export const presetUniAppX = definePreset<PresetUniAppXOptions>((options: Preset
           css.selector,
           options.transformRules
       );
-        console.log('raw',css.selector)
       // 暗色模式
       if (options.darkEnable&&options.darkEnable!=='none'){
         const place = '.'+options.darkVariant+(options.transformClass?options.transformRules[':']??':':':');
