@@ -3,7 +3,7 @@ import type { SourceCodeTransformer } from '@unocss/core';
 import { createFilter } from '@rollup/pluginutils';
 import { getClass, transformCode } from './transform-class/core/index';
 
-interface Options {
+export interface Options {
   /**
    * 自定义转换规则
    * @default https://github.com/MellowCo/unplugin-transform-class#options
@@ -31,10 +31,10 @@ interface Options {
 
 const defaultOptions = {
   classTags: true,
-  include: [/\.[jt]sx?$/, /\.vue$/, /\.vue\?vue/],
-  exclude: [/[\\/]node_modules[\\/]/, /[\\/]\.git[\\/]/],
-  darkEnable:'none',
-  darkClass:'theme-dark',
+  include: [/\.[jt]sx?$/, /\.vue$/, /\.vue\?vue/, /\.uvue$/, /\.uvue\?vue/],
+  exclude: [/[\\/]node_modules[\\/]/,/[\\/]uni_modules[\\/]/,/[\\/]unpackage[\\/]/, /[\\/]\.git[\\/]/],
+  darkEnable:'parent',
+  darkClass:'dark',
   darkVariant:'dark'
 };
 

@@ -25,7 +25,7 @@ export const position: Rule[] = [
 ];
 export const inset: Rule[] = [
   [
-    /^(-)?(top|right|bottom|left)-(\d+(?:\.\d+)?)$/,
+    /(?:dark:)?^(-)?(top|right|bottom|left)-(\d+(?:\.\d+)?)$/,
     ([, sign, d, n], { theme }) => {
       return {
         [d]: sign
@@ -42,7 +42,7 @@ export const inset: Rule[] = [
   ],
 
   [
-    /^(top|right|bottom|left)-\[(.+)\]$/,
+    /(?:dark:)?^(top|right|bottom|left)-\[(.+)\]$/,
     ([, d, n]) => {
       return { [d]: n };
     },
@@ -50,7 +50,7 @@ export const inset: Rule[] = [
   ],
 
   [
-    /^(-)?(?:top|right|bottom|left)-full$/,
+    /(?:dark:)?^(-)?(?:top|right|bottom|left)-full$/,
     ([, sign, d]) => {
       return { [d]: sign ? '-100%' : '100%' };
     },
@@ -68,7 +68,7 @@ export const visible: Rule[] = [
 ];
 export const zindex: Rule[] = [
   [
-    /^(-)?z-(\d+)$/,
+    /(?:dark:)?^(-)?z-(\d+)$/,
     ([, sign, d]) => {
       return { 'z-index': sign ? `-${d}` : `${d}` };
     },

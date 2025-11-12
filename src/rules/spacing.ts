@@ -13,7 +13,7 @@ const createSpacingRule = (
   // Numeric rules with optional negative sign
   Object.entries(directions).forEach(([suffix, props]) => {
     rules.push([
-      new RegExp(`^(-)?${prefix}-${suffix.length==0?'':(suffix+'-')}(\\d+(?:\\.\\d+)?)$`),
+      new RegExp(`^(?:dark:)?(-)?${prefix}-${suffix.length==0?'':(suffix+'-')}(\\d+(?:\\.\\d+)?)$`),
       ([, sign, n], { theme }) => {
         const spacingValue = addUnit(toSpacing(n, theme), theme);
         const finalValue = sign ? `-${spacingValue}` : spacingValue;
@@ -25,7 +25,7 @@ const createSpacingRule = (
   if(prefix=='m'){
     Object.entries(directions).forEach(([suffix, props]) => {
       rules.push([
-        new RegExp(`^${prefix}-${suffix.length==0?'':(suffix+'-')}auto$`),
+        new RegExp(`^(?:dark:)?${prefix}-${suffix.length==0?'':(suffix+'-')}auto$`),
         ([, ]) => {
           const spacingValue = 'auto';
           return props.reduce((acc, prop) => ({ ...acc, [prop]: spacingValue }), {} as SpacingProps);
@@ -38,7 +38,7 @@ const createSpacingRule = (
   // Arbitrary value rules
   Object.entries(directions).forEach(([suffix, props]) => {
     rules.push([
-      new RegExp(`^${prefix}-${suffix.length==0?'':(suffix+'-')}\\[(.+)\\]$`),
+      new RegExp(`^(?:dark:)?${prefix}-${suffix.length==0?'':(suffix+'-')}\\[(.+)\\]$`),
       ([, n]) => props.reduce((acc, prop) => ({ ...acc, [prop]: n }), {} as SpacingProps),
       { autocomplete: [`${prefix}-${suffix.length==0?'':(suffix+'-')}[<number>(px|%|rpx)]`] }
     ]);

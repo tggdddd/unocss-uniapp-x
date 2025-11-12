@@ -3,7 +3,7 @@ import { Rule } from '@unocss/core';
 // 不适合统一定义，需要根据具体情况进行配置
 export const boxShadow: Rule[] = [
   [
-    new RegExp(`^shadow-\\[(.+)\\]$`),
+    new RegExp(`^(?:dark:)?shadow-\\[(.+)\\]$`),
     ([, n]) => {
       return { 'box-shadow': n.replaceAll('_', ' ') };
     },
@@ -13,7 +13,7 @@ export const boxShadow: Rule[] = [
 
 export const textShadow: Rule[] = [
   [
-    new RegExp(`^text-shadow-\\[(.+)\\]$`),
+    new RegExp(`^(?:dark:)?text-shadow-\\[(.+)\\]$`),
     ([, n]) => {
       return { 'text-shadow': n.replaceAll('_', ' ') };
     },
@@ -23,14 +23,14 @@ export const textShadow: Rule[] = [
 
 export const opacity: Rule[] = [
   [
-    new RegExp(`^opacity-(\\d+)$`),
+    new RegExp(`^(?:dark:)?opacity-(\\d+)$`),
     ([, n]) => {
       return { opacity: Number(n) / 100 };
     },
     { autocomplete: [`opacity-<num>`] }
   ],
   [
-    new RegExp(`^opacity-\\[(.+)\\]$`),
+    new RegExp(`^(?:dark:)?opacity-\\[(.+)\\]$`),
     ([, n]) => {
       return { opacity: n };
     },

@@ -3,7 +3,7 @@ import { addUnit, toSpacing } from '../utils';
 import { Theme } from '../theme';
 export const flexBasis: Rule<Theme>[] = [
   [
-    /^basis-(\d+(?:\.\d+)?(rpx|px|%)?)$/,
+    /(?:dark:)?^basis-(\d+(?:\.\d+)?(rpx|px|%)?)$/,
     ([, n, unit], { theme }) => {
       if (!unit) {
         return { 'flex-basis': `${addUnit(toSpacing(n, theme), theme)}` };
@@ -32,17 +32,17 @@ export const flex: Rule<Theme>[] = [
   ['flex-none', { flex: 'none' }],
   ['flex-1', { flex: '1 1 0' }],
   [
-    /^(?:flex-)?shrink(?:-(.*))?$/,
+    /(?:dark:)?^(?:flex-)?shrink(?:-(.*))?$/,
     ([, d = '']) => ({ 'flex-shrink': d ?? 1 }),
     { autocomplete: ['flex-shrink-<num>', 'shrink-<num>'] }
   ],
   [
-    /^(?:flex-)?grow(?:-(.*))?$/,
+    /(?:dark:)?^(?:flex-)?grow(?:-(.*))?$/,
     ([, d = '']) => ({ 'flex-grow': d ?? 1 }),
     { autocomplete: ['flex-grow-<num>', 'grow-<num>'] }
   ],
   [
-    /^(?:flex-)?basis-(\d+(?:\.\d+)?(rpx|px|%)?)$/,
+    /(?:dark:)?^(?:flex-)?basis-(\d+(?:\.\d+)?(rpx|px|%)?)$/,
     ([, n, unit], { theme }) => {
       if (!unit) {
         return { 'flex-basis': `${addUnit(toSpacing(n, theme), theme)}` };

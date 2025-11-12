@@ -10,7 +10,7 @@ const borderRadiusMap: Record<string, string> = {
 };
 export const borderRadius: Rule[] = [
   [
-    /^rounded(?:-(tr|tl|br|bl))?-(\d+(?:\.\d+)?)$/,
+    /(?:dark:)?^rounded(?:-(tr|tl|br|bl))?-(\d+(?:\.\d+)?)$/,
     ([, d, n], { theme }) => {
       if (d) {
         return {
@@ -23,7 +23,7 @@ export const borderRadius: Rule[] = [
     { autocomplete: [`rounded-<num>`, `rounded-(tr|tl|br|bl)-<num>`] }
   ],
   [
-    /^rounded(?:-(tr|tl|br|bl))?-\[(.+)\]$/,
+    /(?:dark:)?^rounded(?:-(tr|tl|br|bl))?-\[(.+)\]$/,
     ([, d, n], { theme }) => {
       if (d) {
         return {
@@ -54,7 +54,7 @@ const borderWidthMap: Record<string, string[]> = {
 };
 export const borderWidth: Rule[] = [
   [
-    /^border(?:-(t|b|l|r|y|x))?-(\d+(?:\.\d+)?)$/,
+    /(?:dark:)?^border(?:-(t|b|l|r|y|x))?-(\d+(?:\.\d+)?)$/,
     ([, d, n], { theme }) => {
       if (d) {
         const border = borderWidthMap[d];
@@ -70,7 +70,7 @@ export const borderWidth: Rule[] = [
     { autocomplete: [`border-<num>`, `border-(t|b|l|r|y|x)-<num>`] }
   ],
   [
-    /^border(?:-(t|b|l|r))?-\[(\d+.*)\]$/,
+    /(?:dark:)?^border(?:-(t|b|l|r))?-\[(\d+.*)\]$/,
     ([, d, n]) => {
       if (d) {
         const border = borderWidthMap[d];
@@ -94,7 +94,7 @@ export const borderWidth: Rule[] = [
 const createBorderColorRules = (): Rule[] => {
   const rules: Rule[] = [
     [
-      /^border(?:-(t|b|l|r|y|x))?-\[(#.+)]$/,
+      /(?:dark:)?^border(?:-(t|b|l|r|y|x))?-\[(#.+)]$/,
       ([, d, n]) => {
         if (d) {
           const border = borderWidthMap[d];
@@ -109,7 +109,7 @@ const createBorderColorRules = (): Rule[] => {
       { autocomplete: [`border-[#<hex>]`] }
     ],
     [
-      /^border(?:-(t|b|l|r|y|x))?-\[(rgb\(.+\))\]$/,
+      /(?:dark:)?^border(?:-(t|b|l|r|y|x))?-\[(rgb\(.+\))\]$/,
       ([, d, n]) => {
         if (d) {
           const border = borderWidthMap[d];
@@ -124,7 +124,7 @@ const createBorderColorRules = (): Rule[] => {
       { autocomplete: [`border-[rgb(<num>,<num>,<num>)]`] }
     ],
     [
-      /^border(?:-(t|b|l|r|y|x))?-\[(rgba\(.+\))\]$/,
+      /(?:dark:)?^border(?:-(t|b|l|r|y|x))?-\[(rgba\(.+\))\]$/,
       ([, d, n]) => {
         if (d) {
           const border = borderWidthMap[d];
@@ -144,7 +144,7 @@ const createBorderColorRules = (): Rule[] => {
     if (typeof value !== 'string' && value !== undefined) {
       const level = Object.keys(value);
       rules.push([
-        new RegExp(`^border(?:-(t|b|l|r|y|x))?-${key}(?:/(\\d+))?$`),
+        new RegExp(`^(?:dark:)?border(?:-(t|b|l|r|y|x))?-${key}(?:/(\\d+))?$`),
         ([,d, o]) => {
           if (d) {
             const border = borderWidthMap[d];
@@ -161,7 +161,7 @@ const createBorderColorRules = (): Rule[] => {
       level.forEach((level) => {
         if (level === 'DEFAULT') return;
         rules.push([
-          new RegExp(`^border(?:-(t|b|l|r|y|x))?-${key}-${level}(?:/(\\d+))?$`),
+          new RegExp(`^(?:dark:)?border(?:-(t|b|l|r|y|x))?-${key}-${level}(?:/(\\d+))?$`),
           ([,d, o]) => {
             if (d) {
               const border = borderWidthMap[d];
@@ -197,7 +197,7 @@ export const borderColor: Rule[] = createBorderColorRules();
 
 export const borderStyle: Rule[] = [
   [
-    /^border(?:-(t|b|l|r|y|x))?-(solid|dashed|dotted)$/,
+    /(?:dark:)?^border(?:-(t|b|l|r|y|x))?-(solid|dashed|dotted)$/,
     ([, d, n]) => {
       if (d) {
         const border = borderWidthMap[d];

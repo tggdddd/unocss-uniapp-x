@@ -17,7 +17,4 @@ export interface Theme {
 
   // 暗色模式类名 
   darkClass?:string
-
-  // 暗色模式类名前缀 如 dark 即 dark:text-white
-  darkVariant?:string
 }

@@ -39,7 +39,7 @@ const fontFamilyMap: Record<string, string> = {
 };
 export const fontFamily: Rule[] = [
   [
-    new RegExp(`^font-(sans|serif|mono)$`),
+    new RegExp(`^(?:dark:)?font-(sans|serif|mono)$`),
     ([, d]) => {
       return { 'font-family': fontFamilyMap[d] };
     },
@@ -49,14 +49,14 @@ export const fontFamily: Rule[] = [
 
 export const fontSize: Rule[] = [
   [
-    new RegExp(`^text-(\\d+(?:\\.\\d+)?)$`),
+    new RegExp(`^(?:dark:)?text-(\\d+(?:\\.\\d+)?)$`),
     ([, n], { theme }) => {
       return { 'font-size': `${addUnit(toSpacing(n, theme), theme)}` };
     },
     { autocomplete: [`text-<num>`] }
   ],
   [
-    new RegExp(`^text-\\[(\\d+.*)\\]$`),
+    new RegExp(`^(?:dark:)?text-\\[(\\d+.*)\\]$`),
     ([, n]) => {
       return { 'font-size': n };
     },
@@ -65,7 +65,7 @@ export const fontSize: Rule[] = [
 ];
 export const fontStyle: Rule[] = [
   [
-    new RegExp(`^font-style-(normal|italic)$`),
+    new RegExp(`^(?:dark:)?font-style-(normal|italic)$`),
     ([, d]) => {
       return { 'font-style': d };
     },
@@ -74,14 +74,14 @@ export const fontStyle: Rule[] = [
 ];
 export const fontWeight: Rule[] = [
   [
-    new RegExp(`^font-(thin|extralight|light|normal)$`),
+    new RegExp(`^(?:dark:)?font-(thin|extralight|light|normal)$`),
     ([,]) => {
       return { 'font-weight': 400 };
     },
     { autocomplete: [`font-normal`] }
   ],
   [
-    new RegExp(`^font-(medium|semibold|bold|extrabold|black)$`),
+    new RegExp(`^(?:dark:)?font-(medium|semibold|bold|extrabold|black)$`),
     ([,]) => {
       return { 'font-weight': 700 };
     },
@@ -92,7 +92,7 @@ export const fontWeight: Rule[] = [
 ];
 export const letterSpacing: Rule[] = [
   [
-    new RegExp(`^(-)?letter-spacing-(\\d+(?:\\.\\d+)?)$`),
+    new RegExp(`^(?:dark:)?(-)?letter-spacing-(\\d+(?:\\.\\d+)?)$`),
     ([, sign, n], { theme }) => {
       return {
         'letter-spacing': sign
@@ -103,7 +103,7 @@ export const letterSpacing: Rule[] = [
     { autocomplete: [`letter-spacing-<num>`, `-letter-spacing-<num>`] }
   ],
   [
-    new RegExp(`^letter-spacing-\\[(\\d+.*)\\]$`),
+    new RegExp(`^(?:dark:)?letter-spacing-\\[(\\d+.*)\\]$`),
     ([, n]) => {
       return { 'letter-spacing': n };
     },
@@ -113,7 +113,7 @@ export const letterSpacing: Rule[] = [
 
 export const lineClamp: Rule[] = [
   [
-    new RegExp(`^line-clamp-(\\d+)$`),
+    new RegExp(`^(?:dark:)?line-clamp-(\\d+)$`),
     ([, n]) => {
       return {
         overflow: 'hidden',
@@ -129,14 +129,14 @@ export const lineClamp: Rule[] = [
 
 export const lineHeight: Rule[] = [
   [
-    new RegExp(`^leading-(\\d+(?:\\.\\d+)?)$`),
+    new RegExp(`^(?:dark:)?leading-(\\d+(?:\\.\\d+)?)$`),
     ([, n], { theme }) => {
       return { 'line-height': `${addUnit(toSpacing(n, theme), theme)}` };
     },
     { autocomplete: [`leading-<num>`] }
   ],
   [
-    new RegExp(`^leading-\\[(.+)\\]$`),
+    new RegExp(`^(?:dark:)?leading-\\[(.+)\\]$`),
     ([, n]) => {
       return { 'line-height': n };
     },
@@ -146,7 +146,7 @@ export const lineHeight: Rule[] = [
 
 export const textAlign: Rule[] = [
   [
-    new RegExp(`^text-align-(left|center|right)$`),
+    new RegExp(`^(?:dark:)?text-align-(left|center|right)$`),
     ([, d]) => {
       return { 'text-align': d };
     },
@@ -157,21 +157,21 @@ export const textAlign: Rule[] = [
 export const color: Rule[] = [
   ['text-transparent', { color: 'transparent' }],
   [
-    new RegExp(`^text-\\[(#\\w+)\\]$`),
+    new RegExp(`^(?:dark:)?text-\\[(#\\w+)\\]$`),
     ([, n]) => {
       return { color: n };
     },
     { autocomplete: [`text-[#<hex>]`] }
   ],
   [
-    new RegExp(`^text-\\[(rgb\\(.+\\))\\]$`),
+    new RegExp(`^(?:dark:)?text-\\[(rgb\\(.+\\))\\]$`),
     ([, n]) => {
       return { color: n };
     },
     { autocomplete: [`text-[rgb(<num>,<num>,<num>)]`] }
   ],
   [
-    new RegExp(`^text-\\[(rgba\\(.+\\))\\]$`),
+    new RegExp(`^(?:dark:)?text-\\[(rgba\\(.+\\))\\]$`),
     ([, n]) => {
       return { color: n };
     },
@@ -182,7 +182,7 @@ Object.entries(colors!).forEach(([key, value]) => {
   if (typeof value !== 'string' && value !== undefined) {
     const level = Object.keys(value);
     color.push([
-      new RegExp(`^text-${key}(?:/(\\d+))?$`),
+      new RegExp(`^(?:dark:)?text-${key}(?:/(\\d+))?$`),
       ([, o]) => {
         return { color: value['DEFAULT'] + percentToHex(o) };
       },
@@ -191,7 +191,7 @@ Object.entries(colors!).forEach(([key, value]) => {
     level.forEach((level) => {
       if (level === 'DEFAULT') return;
       color.push([
-        new RegExp(`^text-${key}-${level}(?:/(\\d+))?$`),
+        new RegExp(`^(?:dark:)?text-${key}-${level}(?:/(\\d+))?$`),
         ([, o]) => {
           return { color: value[level] + percentToHex(o) };
         },

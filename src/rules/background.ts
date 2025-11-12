@@ -1,24 +1,23 @@
 import { Rule } from '@unocss/core';
 import { percentToHex } from '../utils';
-import { colors } from '../theme/colors';
-
+import { colors } from '../theme';
 export const backgroundColor: Rule[] = [
   [
-    new RegExp(`^bg-\\[(#\\w+)\\]$`),
+    new RegExp(`^(?:dark:)?bg-\\[(#\\w+)\\]$`),
     ([, n]) => {
       return { 'background-color': n };
     },
     { autocomplete: [`bg-[#<hex>]`] }
   ],
   [
-    new RegExp(`^bg-\\[(rgb\(.+))\\]$`),
+    new RegExp(`^(?:dark:)?bg-\\[(rgb\(.+))\\]$`),
     ([, n]) => {
       return { 'background-color': n };
     },
     { autocomplete: [`bg-[rgb(<num>,<num>,<num>)]`] }
   ],
   [
-    new RegExp(`^bg-\\[(rgba\\(.+\\))\\]$`),
+    new RegExp(`^(?:dark:)?bg-\\[(rgba\\(.+\\))\\]$`),
     ([, n]) => {
       return { 'background-color': n };
     },
@@ -29,7 +28,7 @@ Object.entries(colors!).forEach(([key, value]) => {
   if (typeof value !== 'string' && value !== undefined) {
     const level = Object.keys(value);
     backgroundColor.push([
-      new RegExp(`^bg-${key}(?:/(\\d+))?$`),
+      new RegExp(`^(?:dark:)?bg-${key}(?:/(\\d+))?$`),
       ([, o]) => {
         return { 'background-color': value['DEFAULT'] + percentToHex(o) };
       },
@@ -38,7 +37,7 @@ Object.entries(colors!).forEach(([key, value]) => {
     level.forEach((level) => {
       if (level === 'DEFAULT') return;
       backgroundColor.push([
-        new RegExp(`^bg-${key}-${level}(?:/(\\d+))?$`),
+        new RegExp(`^(?:dark:)?bg-${key}-${level}(?:/(\\d+))?$`),
         ([, o]) => {
           return { 'background-color': value[level] + percentToHex(o) };
         },
@@ -46,7 +45,7 @@ Object.entries(colors!).forEach(([key, value]) => {
       ]);
     });
     backgroundColor.push([
-      new RegExp(`^bg-linear-to-(t|b|l|r|tr|tl|br|bl)-${key}(?:/(\\d+))?-${key}(?:/(\\d+))?$`),
+      new RegExp(`^(?:dark:)?bg-linear-to-(t|b|l|r|tr|tl|br|bl)-${key}(?:/(\\d+))?-${key}(?:/(\\d+))?$`),
       ([, d, fromColor, toColor]) => {
         return { 'background-image': `linear-gradient(to ${dM[d]}, ${value['DEFAULT'] + percentToHex(fromColor)}, ${value['DEFAULT'] + percentToHex(toColor)})` };
       },
@@ -55,7 +54,7 @@ Object.entries(colors!).forEach(([key, value]) => {
     level.forEach((level) => {
       if (level === 'DEFAULT') return;
       backgroundColor.push([
-        new RegExp(`^bg-linear-to-(t|b|l|r|tr|tl|br|bl)-${key}-${level}(?:/(\\d+))?-${key}-${level}(?:/(\\d+))?$`),
+        new RegExp(`^(?:dark:)?bg-linear-to-(t|b|l|r|tr|tl|br|bl)-${key}-${level}(?:/(\\d+))?-${key}-${level}(?:/(\\d+))?$`),
         ([, d, fromColor, toColor]) => {
           return { 'background-image': `linear-gradient(to ${dM[d]}, ${value[level] + percentToHex(fromColor)}, ${value[level] + percentToHex(toColor)})` };
         },
@@ -88,7 +87,7 @@ export const backgroundImage: Rule[] = [
     { autocomplete: [`bg-linear-to-(t|b|l|r|tr|tl|br|bl)-<color>-<color>`] }
   ],
   [
-    new RegExp(`^bg-image-\\[(\\w[^\\]]+)\\]$`),
+    new RegExp(`^(?:dark:)?bg-image-\\[(\\w[^\\]]+)\\]$`),
     ([, n]) => {
       return { 'background-image': n.replaceAll('_', ' ') };
     },

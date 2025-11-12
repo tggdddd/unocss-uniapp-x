@@ -1,11 +1,10 @@
 import { definePreset, type PresetOptions } from '@unocss/core';
 import { transformEscapESelector } from './transformers/transform-class/utils';
-import * as theme from './theme';
 import * as rules from './rules';
 import transformerClass from './transformers/index';
-import type { Theme } from './theme';
+import { Theme } from './theme';
 import { autoAdapt } from './adapt';
-import transformerDark from './transformers/transform-dark';
+import type { Options } from './transformers';
 const defaultRules = {
   '.': '_dl_',
   '/': '_sl_',
@@ -24,7 +23,7 @@ const defaultRules = {
   '*': '_star_'
 };
 
-export interface PresetUniAppXOptions extends PresetOptions, Theme {}
+export interface PresetUniAppXOptions extends PresetOptions, Theme,Options {}
 export const presetUniAppX = definePreset<PresetUniAppXOptions>((options: PresetOptions = {}) => {
   options.preflight = options.preflight ?? true;
   options.transformRules = options.transformRules ?? defaultRules;
@@ -34,16 +33,12 @@ export const presetUniAppX = definePreset<PresetUniAppXOptions>((options: Preset
   options.darkClass = options.darkClass ?? 'theme-dark';
   options.darkVariant = options.darkVariant ?? 'dark';
   const transforms = [];
-  if(options.darkEnable&&options.darkEnable!=='none'){
-    transforms.push(transformerDark(options));
-  }
   if(options.transformClass){
     transforms.push(transformerClass(options));
   }
   return {
     name: 'unocss-uni-app-x',
     theme: {
-      ...theme,
       transformRules: options.transformRules,
       numUnit: options.numUnit,
       numScale: options.numScale,

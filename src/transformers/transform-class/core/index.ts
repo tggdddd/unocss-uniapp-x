@@ -7,7 +7,7 @@ import { cacheTransformSelector, defaultRules } from '../utils';
 export function getClass(code: string): string[][] {
   const matchs: string[][] = [];
   // vue
-  Array.from(code.matchAll(/\s:?[A-Za-z0-9]*[c|C]lass="([\s\S]*?)"/g)).forEach(
+  Array.from(code.matchAll(/\s:?[A-Za-z0-9]*(?:c|C|custom-c|customC)lass="([\s\S]*?)"/g)).forEach(
     (m) => {
       const classStr = m[1];
       const sourceStr = trim(m[0]);
