@@ -45,7 +45,7 @@ export const flex: Rule<Theme>[] = [
   ],
   [
     /^(?:dark:)?(?:flex-)?basis-\[.+\]$/,
-    ([, n], { theme }) => {
+    ([, n]) => {
         return { 'flex-basis': n };
     },
     {

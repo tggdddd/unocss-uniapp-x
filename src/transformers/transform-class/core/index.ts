@@ -1,6 +1,5 @@
 import { trim } from '@meoc/utils';
 import { cacheTransformSelector, defaultRules } from '../utils';
-import type {UnocssPluginContext} from '@unocss/core'
 /**
  * 获取class
  */
@@ -65,7 +64,7 @@ export function getArrClass(className: string): string[] {
   );
 }
 // let set = new Set;
-export function transformCode(code: string, rules = defaultRules,context:UnocssPluginContext|null=null): string {
+export function transformCode(code: string, rules = defaultRules): string {
   const classNames = getClass(code);
   // const size = set.size
   classNames.forEach((c) => {
