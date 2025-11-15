@@ -2,16 +2,6 @@ import { Rule } from '@unocss/core';
 import { addUnit, toSpacing } from '../utils';
 import { Theme } from '../theme';
 export const flexBasis: Rule<Theme>[] = [
-  [
-    /(?:dark:)?^basis-(\d+(?:\.\d+)?(rpx|px|%)?)$/,
-    ([, n, unit], { theme }) => {
-      if (!unit) {
-        return { 'flex-basis': `${addUnit(toSpacing(n, theme), theme)}` };
-      }
-      return { 'flex-basis': `${n}${unit}` };
-    },
-    { autocomplete: [`basis-<num>-(px|rpx|%)`, `basis-<num>`] }
-  ],
   ['basis-full', { 'flex-basis': '100%' }],
   ['basis-auto', { 'flex-basis': 'auto' }]
 ];
@@ -32,17 +22,41 @@ export const flex: Rule<Theme>[] = [
   ['flex-none', { flex: 'none' }],
   ['flex-1', { flex: '1 1 0' }],
   [
-    /(?:dark:)?^(?:flex-)?shrink(?:-(.*))?$/,
+    /^(?:dark:)?(?:flex-)?shrink(?:-(.*))?$/,
     ([, d = '']) => ({ 'flex-shrink': d ?? 1 }),
     { autocomplete: ['flex-shrink-<num>', 'shrink-<num>'] }
   ],
   [
-    /(?:dark:)?^(?:flex-)?grow(?:-(.*))?$/,
+    /^(?:dark:)?(?:flex-)?grow(?:-(.*))?$/,
     ([, d = '']) => ({ 'flex-grow': d ?? 1 }),
     { autocomplete: ['flex-grow-<num>', 'grow-<num>'] }
   ],
   [
-    /(?:dark:)?^(?:flex-)?basis-(\d+(?:\.\d+)?(rpx|px|%)?)$/,
+    /^(?:dark:)?(?:flex-)?basis-(\d+(?:\.\d+))$/,
+    ([, n], { theme }) => {
+        return { 'flex-basis': `${addUnit(toSpacing(n, theme), theme)}` };
+    },
+    {
+      autocomplete: [
+        `basis-<num>`,
+        'flex-basis-<num>'
+      ]
+    }
+  ],
+  [
+    /^(?:dark:)?(?:flex-)?basis-\[.+\]$/,
+    ([, n], { theme }) => {
+        return { 'flex-basis': n };
+    },
+    {
+      autocomplete: [
+        `basis-[<num>]`,
+        'flex-basis-[<num>]'
+      ]
+    }
+  ],
+  [
+    /^(?:dark:)?(?:flex-)?basis-(\d+(?:\.\d+)?(rpx|px|%)?)$/,
     ([, n, unit], { theme }) => {
       if (!unit) {
         return { 'flex-basis': `${addUnit(toSpacing(n, theme), theme)}` };

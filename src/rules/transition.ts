@@ -46,7 +46,7 @@ function resolveTransitionProperty(prop: string): string | undefined {
 export const transitions: Rule<Theme>[] = [
   // transition
   [
-    /(?:dark:)?^transition(?:-(\D+?))?(?:-(\d+))?$/,
+    /^(?:dark:)?transition(?:-(\D+?))?(?:-(\d+))?$/,
     ([, prop, d]) => {
       if (!prop && !d) {
         return {
@@ -80,19 +80,19 @@ export const transitions: Rule<Theme>[] = [
 
   // timings
   [
-    /(?:dark:)?^(?:transition-)?duration-(.+)$/,
+    /^(?:dark:)?(?:transition-)?duration-(.+)$/,
     ([, d]) => ({ 'transition-duration': time(d) }),
     { autocomplete: ['transition-duration-<number>(|ms|s)', 'duration-<150|150ms|150s>'] }
   ],
 
   [
-    /(?:dark:)?^(?:transition-)?delay-(.+)$/,
+    /^(?:dark:)?(?:transition-)?delay-(.+)$/,
     ([, d]) => ({ 'transition-delay': time(d) }),
     { autocomplete: ['transition-delay-<number>(|ms|s)', 'delay-<number>(|ms|s)'] }
   ],
 
   [
-    /(?:dark:)?^(?:transition-)?ease(?:-(.+))?$/,
+    /^(?:dark:)?(?:transition-)?ease(?:-(.+))?$/,
     ([, d]) => ({ 'transition-timing-function': d ?? 'ease' }),
     {
       autocomplete: [
@@ -104,7 +104,7 @@ export const transitions: Rule<Theme>[] = [
 
   // props
   [
-    /(?:dark:)?^(?:transition-)?property-(.+)$/,
+    /^(?:dark:)?(?:transition-)?property-(.+)$/,
     ([, v]) => {
       const p = resolveTransitionProperty(v);
       if (p) return { 'transition-property': p };

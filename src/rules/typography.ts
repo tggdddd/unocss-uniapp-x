@@ -157,25 +157,11 @@ export const textAlign: Rule[] = [
 export const color: Rule[] = [
   ['text-transparent', { color: 'transparent' }],
   [
-    new RegExp(`^(?:dark:)?text-\\[(#\\w+)\\]$`),
+    new RegExp(`^(?:dark:)?text-\\[(\\D.+)\\]$`),
     ([, n]) => {
       return { color: n };
     },
-    { autocomplete: [`text-[#<hex>]`] }
-  ],
-  [
-    new RegExp(`^(?:dark:)?text-\\[(rgb\\(.+\\))\\]$`),
-    ([, n]) => {
-      return { color: n };
-    },
-    { autocomplete: [`text-[rgb(<num>,<num>,<num>)]`] }
-  ],
-  [
-    new RegExp(`^(?:dark:)?text-\\[(rgba\\(.+\\))\\]$`),
-    ([, n]) => {
-      return { color: n };
-    },
-    { autocomplete: [`text-[rgba(<num>,<num>,<num>,<num>)]`] }
+    { autocomplete: [`text-[any]`] }
   ]
 ];
 Object.entries(colors!).forEach(([key, value]) => {
@@ -198,6 +184,14 @@ Object.entries(colors!).forEach(([key, value]) => {
         { autocomplete: [`text-${key}-${level}`, `text-${key}-${level}/<num>`] }
       ]);
     });
+  }else{
+    color.push([
+      new RegExp(`^(?:dark:)?text-${key}(?:/(\d+))?$`),
+      ([, o]) => {
+        return { color: value + percentToHex(o) };
+      },
+      { autocomplete: [`text-${key}`, `text-${key}/<num>`] }
+    ]);
   }
 });
 export const textDecorationLine: Rule[] = [

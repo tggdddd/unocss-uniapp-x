@@ -66,7 +66,11 @@ export const presetUniAppX = definePreset<PresetUniAppXOptions>((options: Preset
           css.selector = css.selector.replace(place, `.${options.darkClass} ${place},.${options.darkClass}${place}`);
         }
       }
-        
+      if(css.selector.includes('!')){
+        css.entries.forEach((entry) => {
+          entry[1] += ' !important';
+        });
+      }
     },
     transformers: transforms,
     autocomplete:{

@@ -55,8 +55,9 @@ export default function transformerClass(
     name: 'transformer-weapp-class',
     idFilter,
     enforce: 'pre',
-    transform(code, id) {
-      let newCode = transformCode(code.toString(), options.transformRules);
+    transform(code, id,context) {
+      // code.toString()
+      let newCode = transformCode(code.toString(), options.transformRules,context);
 
       if (options.classTags) {
         const classNames = getClass(code.toString());

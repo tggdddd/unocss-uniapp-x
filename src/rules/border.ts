@@ -10,7 +10,7 @@ const borderRadiusMap: Record<string, string> = {
 };
 export const borderRadius: Rule[] = [
   [
-    /(?:dark:)?^rounded(?:-(tr|tl|br|bl))?-(\d+(?:\.\d+)?)$/,
+    /^(?:dark:)?rounded(?:-(tr|tl|br|bl))?-(\d+(?:\.\d+)?)$/,
     ([, d, n], { theme }) => {
       if (d) {
         return {
@@ -23,7 +23,7 @@ export const borderRadius: Rule[] = [
     { autocomplete: [`rounded-<num>`, `rounded-(tr|tl|br|bl)-<num>`] }
   ],
   [
-    /(?:dark:)?^rounded(?:-(tr|tl|br|bl))?-\[(.+)\]$/,
+    /^(?:dark:)?rounded(?:-(tr|tl|br|bl))?-\[(.+)\]$/,
     ([, d, n], { theme }) => {
       if (d) {
         return {
@@ -54,7 +54,7 @@ const borderWidthMap: Record<string, string[]> = {
 };
 export const borderWidth: Rule[] = [
   [
-    /(?:dark:)?^border(?:-(t|b|l|r|y|x))?-(\d+(?:\.\d+)?)$/,
+    /^(?:dark:)?border(?:-(t|b|l|r|y|x))?-(\d+(?:\.\d+)?)$/,
     ([, d, n], { theme }) => {
       if (d) {
         const border = borderWidthMap[d];
@@ -70,7 +70,7 @@ export const borderWidth: Rule[] = [
     { autocomplete: [`border-<num>`, `border-(t|b|l|r|y|x)-<num>`] }
   ],
   [
-    /(?:dark:)?^border(?:-(t|b|l|r))?-\[(\d+.*)\]$/,
+    /^(?:dark:)?border(?:-(t|b|l|r))?-\[(\d+.*)\]$/,
     ([, d, n]) => {
       if (d) {
         const border = borderWidthMap[d];
@@ -94,7 +94,7 @@ export const borderWidth: Rule[] = [
 const createBorderColorRules = (): Rule[] => {
   const rules: Rule[] = [
     [
-      /(?:dark:)?^border(?:-(t|b|l|r|y|x))?-\[(#.+)]$/,
+      /^(?:dark:)?border(?:-(t|b|l|r|y|x))?-\[(\D.+)\]$/,
       ([, d, n]) => {
         if (d) {
           const border = borderWidthMap[d];
@@ -106,37 +106,7 @@ const createBorderColorRules = (): Rule[] => {
         }
         return { 'border-color': n };
       },
-      { autocomplete: [`border-[#<hex>]`] }
-    ],
-    [
-      /(?:dark:)?^border(?:-(t|b|l|r|y|x))?-\[(rgb\(.+\))\]$/,
-      ([, d, n]) => {
-        if (d) {
-          const border = borderWidthMap[d];
-          const css: Record<string, string> = {};
-          border.forEach((item) => {
-            css['border-' + item + '-color'] = n;
-          });
-          return css;
-        }
-        return { 'border-color': n };
-      },
-      { autocomplete: [`border-[rgb(<num>,<num>,<num>)]`] }
-    ],
-    [
-      /(?:dark:)?^border(?:-(t|b|l|r|y|x))?-\[(rgba\(.+\))\]$/,
-      ([, d, n]) => {
-        if (d) {
-          const border = borderWidthMap[d];
-          const css: Record<string, string> = {};
-          border.forEach((item) => {
-            css['border-' + item + '-color'] = n;
-          });
-          return css;
-        }
-        return { 'border-color': n };
-      },
-      { autocomplete: [`border-[rgba(<num>,<num>,<num>,<num>)]`] }
+      { autocomplete: [`border-[any]`] }
     ]
   ];
 
@@ -187,6 +157,22 @@ const createBorderColorRules = (): Rule[] => {
           }
         ]);
       });
+    }else{
+      rules.push([
+        new RegExp(`^(?:dark:)?border(?:-(t|b|l|r|y|x))?-${key}(?:/(\d+))?$`),
+        ([,d, o]) => {
+          if (d) {
+            const border = borderWidthMap[d];
+            const css: Record<string, string> = {};
+            border.forEach((item) => {
+              css['border-' + item + '-color'] = value + percentToHex(o);
+            });
+            return css;
+          }
+          return { 'border-color': value + percentToHex(o) };
+        },
+        { autocomplete: [`border-${key}`, `border-${key}/<opacity>`, `border-y-${key}/<opacity>`, `border-x-${key}/<opacity>`, `border-t-${key}/<opacity>`, `border-b-${key}/<opacity>`, `border-l-${key}/<opacity>`, `border-r-${key}/<opacity>`] }
+      ]);
     }
   });
 
@@ -197,7 +183,7 @@ export const borderColor: Rule[] = createBorderColorRules();
 
 export const borderStyle: Rule[] = [
   [
-    /(?:dark:)?^border(?:-(t|b|l|r|y|x))?-(solid|dashed|dotted)$/,
+    /^(?:dark:)?border(?:-(t|b|l|r|y|x))?-(solid|dashed|dotted)$/,
     ([, d, n]) => {
       if (d) {
         const border = borderWidthMap[d];

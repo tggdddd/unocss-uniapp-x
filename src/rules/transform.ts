@@ -3,7 +3,7 @@ import { Rule } from '@unocss/core';
 //    不支持单独配置
 export const transform: Rule[] = [
   [
-    /(?:dark:)?^transform-\[(.+)\]$/,
+    /^(?:dark:)?transform-\[(.+)\]$/,
     ([, v]) => {
       return { transform: v.replaceAll('_', ' ') };
     },
@@ -11,28 +11,28 @@ export const transform: Rule[] = [
   ],
 
   [
-    /(?:dark:)?^rotate-(\w+)$/,
+    /^(?:dark:)?rotate-(\w+)$/,
     ([, v]) => {
       return { transform: `rotate(${v}deg)` };
     },
     { autocomplete: [`rotate-<deg>`] }
   ],
   [
-    /(?:dark:)?^rotate-x-(\w+)$/,
+    /^(?:dark:)?rotate-x-(\w+)$/,
     ([, v]) => {
       return { transform: `rotateX(${v}deg)` };
     },
     { autocomplete: [`rotate-x-<deg>`] }
   ],
   [
-    /(?:dark:)?^rotate-y-(\w+)$/,
+    /^(?:dark:)?rotate-y-(\w+)$/,
     ([, v]) => {
       return { transform: `rotateY(${v}deg)` };
     },
     { autocomplete: [`rotate-y-<deg>`] }
   ],
   [
-    /(?:dark:)?^rotate-z-(\w+)$/,
+    /^(?:dark:)?rotate-z-(\w+)$/,
     ([, v]) => {
       return { transform: `rotateZ(${v}deg)` };
     },
@@ -40,7 +40,7 @@ export const transform: Rule[] = [
   ],
 
   [
-    /(?:dark:)?^scale-(\w+)$/,
+    /^(?:dark:)?scale-(\w+)$/,
     ([, v]) => {
       return { transform: `scale(${v})` };
     },
@@ -48,14 +48,14 @@ export const transform: Rule[] = [
   ],
 
   [
-    /(?:dark:)?^scale-x-(\w+)$/,
+    /^(?:dark:)?scale-x-(\w+)$/,
     ([, v]) => {
       return { transform: `scaleX(${v})` };
     },
     { autocomplete: [`scale-x-<num>`] }
   ],
   [
-    /(?:dark:)?^scale-y-(\w+)$/,
+    /^(?:dark:)?scale-y-(\w+)$/,
     ([, v]) => {
       return { transform: `scaleY(${v})` };
     },
@@ -63,7 +63,7 @@ export const transform: Rule[] = [
   ],
 
   [
-    /(?:dark:)?^translate-\[(\w+)\]$/,
+    /^(?:dark:)?translate-\[(.+)\]$/,
     ([, v]) => {
       return { transform: `translate(${v})` };
     },
@@ -71,14 +71,14 @@ export const transform: Rule[] = [
   ],
 
   [
-    /(?:dark:)?^translate-x-\[(\w+)\]$/,
+    /^(?:dark:)?translate-x-\[(.+)\]$/,
     ([, v]) => {
       return { transform: `translateX(${v})` };
     },
     { autocomplete: [`translate-x-[<translate>]`] }
   ],
   [
-    /(?:dark:)?^translate-y-\[(\w+)\]$/,
+    /^(?:dark:)?translate-y-\[(.+)\]$/,
     ([, v]) => {
       return { transform: `translateY(${v})` };
     },

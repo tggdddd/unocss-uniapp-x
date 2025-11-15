@@ -13,24 +13,24 @@ const createSpacingRule = (
   // Numeric rules with optional negative sign
   Object.entries(directions).forEach(([suffix, props]) => {
     rules.push([
-      new RegExp(`^(?:dark:)?(-)?${prefix}-${suffix.length==0?'':(suffix+'-')}(\\d+(?:\\.\\d+)?)$`),
+      new RegExp(`^(?:dark:)?(-)?${prefix}${suffix.length==0?'':(suffix+'-')}(\\d+(?:\\.\\d+)?)$`),
       ([, sign, n], { theme }) => {
         const spacingValue = addUnit(toSpacing(n, theme), theme);
         const finalValue = sign ? `-${spacingValue}` : spacingValue;
         return props.reduce((acc, prop) => ({ ...acc, [prop]: finalValue }), {} as SpacingProps);
       },
-      { autocomplete: [`${prefix}-${suffix.length==0?'':(suffix+'-')}<num>`, `-${prefix}-${suffix.length==0?'':(suffix+'-')}<num>`] }
+      { autocomplete: [`${prefix}${suffix.length==0?'':(suffix+'-')}<num>`, `-${prefix}-${suffix.length==0?'':(suffix+'-')}<num>`] }
     ]);
   });
   if(prefix=='m'){
     Object.entries(directions).forEach(([suffix, props]) => {
       rules.push([
-        new RegExp(`^(?:dark:)?${prefix}-${suffix.length==0?'':(suffix+'-')}auto$`),
+        new RegExp(`^(?:dark:)?${prefix}${suffix.length==0?'':(suffix+'-')}auto$`),
         ([, ]) => {
           const spacingValue = 'auto';
           return props.reduce((acc, prop) => ({ ...acc, [prop]: spacingValue }), {} as SpacingProps);
         },
-        { autocomplete: [`${prefix}-${suffix.length==0?'':(suffix+'-')}auto`] }
+        { autocomplete: [`${prefix}${suffix.length==0?'':(suffix+'-')}auto`] }
       ]);
     });
   }
@@ -38,9 +38,9 @@ const createSpacingRule = (
   // Arbitrary value rules
   Object.entries(directions).forEach(([suffix, props]) => {
     rules.push([
-      new RegExp(`^(?:dark:)?${prefix}-${suffix.length==0?'':(suffix+'-')}\\[(.+)\\]$`),
+      new RegExp(`^(?:dark:)?${prefix}${suffix.length==0?'':(suffix+'-')}\\[(.+)\\]$`),
       ([, n]) => props.reduce((acc, prop) => ({ ...acc, [prop]: n }), {} as SpacingProps),
-      { autocomplete: [`${prefix}-${suffix.length==0?'':(suffix+'-')}[<number>(px|%|rpx)]`] }
+      { autocomplete: [`${prefix}${suffix.length==0?'':(suffix+'-')}[<number>(px|%|rpx)]`] }
     ]);
   });
 

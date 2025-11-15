@@ -1,6 +1,6 @@
 import { trim } from '@meoc/utils';
 import { cacheTransformSelector, defaultRules } from '../utils';
-
+import type {UnocssPluginContext} from '@unocss/core'
 /**
  * 获取class
  */
@@ -36,14 +36,14 @@ export function getClass(code: string): string[][] {
   });
 
   // className={xxxx}
-  Array.from(
-    code.matchAll(/\s:?[A-Za-z0-9]*[c|C]lassName=\{([\s\S]*?)\}/g)
-  ).forEach((m) => {
-    matchs.push([
-      m[0],
-      ...Array.from(m[1].matchAll(/["']([\s\S]+?)["']/g)).map((v) => v[1])
-    ]);
-  });
+  // Array.from(
+  //   code.matchAll(/\s:?[A-Za-z0-9]*[c|C]lassName=\{([\s\S]*?)\}/g)
+  // ).forEach((m) => {
+  //   matchs.push([
+  //     m[0],
+  //     ...Array.from(m[1].matchAll(/["']([\s\S]+?)["']/g)).map((v) => v[1])
+  //   ]);
+  // });
 
   return matchs;
 }
@@ -64,20 +64,41 @@ export function getArrClass(className: string): string[] {
     (v) => v[1]
   );
 }
-
-export function transformCode(code: string, rules = defaultRules): string {
+// let set = new Set;
+export function transformCode(code: string, rules = defaultRules,context:UnocssPluginContext|null=null): string {
   const classNames = getClass(code);
-
+  // const size = set.size
   classNames.forEach((c) => {
     let currentClass = c[0];
+    // let hoverClass:string[] = [];
     c.slice(1).forEach((selector) => {
+      // Array.from(selector.matchAll(/(?:hover|active):(\S+)/g)).forEach((m) => {
+      //   const se = m[1]
+      //   // let ue = m[1]
+      //   // if(!se.startsWith('!')){
+      //   //   se = '!'+se
+      //   // }else{
+      //   //   ue = se.replace('!','')
+      //   // }
+      //   hoverClass.push(cacheTransformSelector(se, rules))
+      //   context?.tokens?.add(se)
+      //   // if(!set.has(se)){
+      //   //   context?.uno?.config?.shortcuts?.push([se,ue])
+      //   //   set.add(se)
+      //   // }
+      //   selector.replace(m[0],"")
+      //   currentClass = currentClass.replace(m[0],"");
+      // })
       currentClass = currentClass.replace(
         selector,
         cacheTransformSelector(selector, rules)
       );
     });
-    code = code.replace(c[0], currentClass);
+    // if(hoverClass.length>0){
+    //   code = code.replace(c[0], currentClass + ' hover-class="'+hoverClass.join(' ')+'"');
+    // }else{
+      code = code.replace(c[0], currentClass);
+    // }
   });
-
   return code;
 }
